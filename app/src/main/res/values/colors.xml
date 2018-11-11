@@ -6,4 +6,6 @@
     <color name="page1">#d1cca6</color>
     <color name="page2">#99986e</color>
     <color name="button">#22581d</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>
