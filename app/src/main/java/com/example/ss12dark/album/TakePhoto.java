@@ -55,17 +55,13 @@ public class TakePhoto extends AppCompatActivity {
         if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
 
-            // Should we show an explanation?
             if (shouldShowRequestPermissionRationale(
                     Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                // Explain to the user why we need to read the contacts
             }
 
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                     MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
 
-            // MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE is an
-            // app-defined int constant that should be quite unique
 
         }
 
@@ -76,7 +72,6 @@ public class TakePhoto extends AppCompatActivity {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 startActivityForResult(intent, REQUEST_IMAGE_GALLERY);
-//                startActivityForResult(intent, 0);
 
             }
         });

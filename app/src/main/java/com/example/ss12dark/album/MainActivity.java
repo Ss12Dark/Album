@@ -65,16 +65,8 @@ String number;
 
         db = new MyDBHandler(this);
         number = num+"";
-        db.close();
-    }
-
-    @Override
-    protected void onResume() {
-
-        super.onResume();
-
         new AsyncCaller().execute(number);
-
+        db.close();
     }
 
 
