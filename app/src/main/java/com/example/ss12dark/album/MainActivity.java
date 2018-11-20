@@ -65,7 +65,12 @@ String number;
 
         db = new MyDBHandler(this);
         number = num+"";
-        new AsyncCaller().execute(number);
+        all =db.getAllPhotoList(num);
+        if(all.size()>0){
+            new AsyncCaller().execute(number);
+        }else{
+            Toast.makeText(MainActivity.this,"this album is empty",Toast.LENGTH_SHORT).show();
+        }
         db.close();
     }
 
@@ -97,11 +102,9 @@ String number;
         }
 
         private void startAlbum(int num) {
-            all = db.getAllPhotoList(num);
             int i = 0;
-            if (all.size()==i){
-                Toast.makeText(MainActivity.this,"this album is empty",Toast.LENGTH_SHORT).show();
-            }else{
+
+
                 while(i<all.size()){
                     int album = all.get(i).getAlbumNum();
                     if(album==num){
@@ -112,7 +115,7 @@ String number;
                     }
                     i++;
                 }
-            }
+
         }
 
         private void createImage(String name, String filePath,int ID){
