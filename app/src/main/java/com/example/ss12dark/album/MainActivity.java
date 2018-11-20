@@ -65,22 +65,6 @@ String number;
 
         db = new MyDBHandler(this);
         number = num+"";
-//        all = db.getAllPhotoList(num);
-//        int i = 0;
-//        if (all.size()==i){
-//            Toast.makeText(this,"this album is empty",Toast.LENGTH_SHORT).show();
-//        }else{
-//            while(i<all.size()){
-//                int album = all.get(i).getAlbumNum();
-//                if(album==num){
-//                    String name = all.get(i).getName();
-//                    String filePath = all.get(i).getUrl();
-//                    int ID = all.get(i).getID();
-//                    createImage(name,filePath,ID);
-//                }
-//                i++;
-//            }
-//        }
         db.close();
     }
 
@@ -96,11 +80,18 @@ String number;
 
     private class AsyncCaller extends AsyncTask<String, Void, Void>
     {
-
+        ProgressDialog pdLoading = new ProgressDialog(MainActivity.this);
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            MainActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    pdLoading.setMessage("\tLoading...");
+                    pdLoading.show();
+                }
+            });
 
         }
         @Override
@@ -219,6 +210,13 @@ String number;
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
+
+            MainActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    pdLoading.dismiss();
+                }
+            });
 
         }
 
