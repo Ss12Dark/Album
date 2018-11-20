@@ -101,6 +101,13 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
     }
 
+    public boolean deletePhoto(int ID) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        return db.delete(TABLE_PHOTOSS, KEY_ID + "=" + ID, null) > 0;
+
+    }
 
     public List<Photo> getAllPhotoList(int album) {
 
@@ -154,9 +161,11 @@ public class MyDBHandler extends SQLiteOpenHelper{
                 photo.setAlna(cursor.getString(3));
                 photo.setAlbumNum(Integer.parseInt(cursor.getString(4)));
 
-
                 // Adding contact to list
-                PhotoList.add(photo);
+
+                    PhotoList.add(photo);
+
+
 
             } while (cursor.moveToNext());
         }

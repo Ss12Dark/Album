@@ -3,6 +3,7 @@ package com.example.ss12dark.album;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,7 +14,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 public class AlbumsLobby extends AppCompatActivity {
     LinearLayout ll;
@@ -48,6 +53,7 @@ public class AlbumsLobby extends AppCompatActivity {
                         m_Text = input.getText().toString();
                         String albumname = m_Text;
                         makeButton(album,numberCounter,albumname);
+                        ll.addView(album);
                     }
                 });
                 builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -60,7 +66,7 @@ public class AlbumsLobby extends AppCompatActivity {
                 builder.show();
 
 
-                ll.addView(album);
+
             }
         });
         setting = (Button) findViewById(R.id.setting);
@@ -79,16 +85,33 @@ public class AlbumsLobby extends AppCompatActivity {
     public void createAlbums(){
         db = new MyDBHandler(this);
         List<Photo> all = db.getAllAlbumList();
+        List<Integer> checks = new ArrayList<>();
         int i = 0;
-        int checkMultiply=-5;
+
         if (all.size()==i){
 
         }else{
             while(i<all.size()){
+                boolean notGood = true;
+                boolean next = true;
                 int album = all.get(i).getAlbumNum();
-                if(album!=checkMultiply) {
+                if(i==0){
+                    checks.add(album);
+                    notGood=false;
+                }
+                while(notGood){
+                    int j = 0;
+                    while(j<checks.size()){
+                        if(album==checks.get(j)){
+                            next =false;
+                        }
+                        j++;
+                    }
+                    notGood=false;
+                }
+                if(next) {
+                    checks.add(album);
                     String AlNa = all.get(i).getAlna();
-                    checkMultiply = album;
                     Button newAlbum = new Button(AlbumsLobby.this);
                     makeButton(newAlbum, album,AlNa);
                     ll.addView(newAlbum);

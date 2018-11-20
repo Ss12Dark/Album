@@ -5,11 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
+<ScrollView
+    android:background="@color/button"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
         <HorizontalScrollView
             android:background="@color/page1"
             android:layout_width="match_parent"
@@ -24,7 +27,7 @@
                     android:gravity="center"
                     android:background="@color/page1"
                     android:layout_width="match_parent"
-                    android:layout_height="400dp">
+                    android:layout_height="370dp">
 
                 </LinearLayout>
 
@@ -48,9 +51,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <Button
-            android:text="back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+                android:text="back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <LinearLayout
                 android:gravity="center"
                 android:orientation="vertical"
@@ -81,5 +84,7 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
+
+</ScrollView>
 
 </android.support.constraint.ConstraintLayout>

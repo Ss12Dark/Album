@@ -29,9 +29,12 @@ public class TakePhoto extends AppCompatActivity {
     Activity a = this;
     MyDBHandler db;
 
+    int loadOrPicture=0;
+    //load = 1; picture = 2;
     private static final int REQUEST_IMAGE_GALLERY = 1;
     private static final int SELECT_PHOTO = 2;
     Bitmap imageBitmap;
+    Uri Selected_Image_Uri;
     String fileName ;
     int albomNo =0;
     String alna;
@@ -69,6 +72,7 @@ public class TakePhoto extends AppCompatActivity {
         imageV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loadOrPicture = 2;
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 startActivityForResult(intent, REQUEST_IMAGE_GALLERY);
@@ -86,11 +90,18 @@ public class TakePhoto extends AppCompatActivity {
             }else{
                 try {
                     fileName = title.getText().toString();
-                    // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
-                    Uri tempUri = getImageUri(getApplicationContext(), imageBitmap);
 
+
+                    File finalFile;
                     // CALL THIS METHOD TO GET THE ACTUAL PATH
-                    File finalFile = new File(getRealPathFromURI(tempUri));
+                    if (loadOrPicture == 2) {
+                        // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
+                        Uri tempUri = getImageUri(getApplicationContext(), imageBitmap);
+                        finalFile = new File(getRealPathFromURI(tempUri));
+                    }else{
+                        finalFile = new File(getRealPathFromURI(Selected_Image_Uri));
+                    }
+
                     filePath = finalFile.toString();
                     Photo photo = new Photo();
                     photo.setName(fileName);
@@ -109,6 +120,7 @@ public class TakePhoto extends AppCompatActivity {
     }
     public void load (View view)
     {
+        loadOrPicture = 1;
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, SELECT_PHOTO);
@@ -118,7 +130,7 @@ public class TakePhoto extends AppCompatActivity {
 
     protected void onActivityResult( int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Uri image;
+
         if(requestCode==REQUEST_IMAGE_GALLERY && resultCode== RESULT_OK)
         {
             imageBitmap = (Bitmap) data.getExtras().get("data");
@@ -128,7 +140,7 @@ public class TakePhoto extends AppCompatActivity {
         }
 
         if (requestCode == SELECT_PHOTO && resultCode == RESULT_OK) {
-            Uri Selected_Image_Uri = data.getData();
+            Selected_Image_Uri = data.getData();
             imageV.setBackgroundColor(Color.alpha(Color.WHITE));
             imageV.setImageURI(Selected_Image_Uri);
         }

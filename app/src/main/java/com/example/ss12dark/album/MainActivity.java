@@ -1,14 +1,18 @@
 package com.example.ss12dark.album;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Layout;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -66,7 +70,8 @@ LinearLayout upperPage,bottomPage;
                 if(album==num){
                     String name = all.get(i).getName();
                     String filePath = all.get(i).getUrl();
-                    createImage(name,filePath);
+                    int ID = all.get(i).getID();
+                    createImage(name,filePath,ID);
                 }
                 i++;
             }
@@ -74,9 +79,9 @@ LinearLayout upperPage,bottomPage;
         db.close();
     }
 
-    public void createImage(String name, String filePath){
+    public void createImage(String name, String filePath,int ID){
         ImageView image = new ImageView(this);
-        resizeImage(image,filePath);
+        resizeImage(image,filePath,ID);
 
         File imgFile = new  File(filePath);
         if(imgFile.exists()){
@@ -84,7 +89,9 @@ LinearLayout upperPage,bottomPage;
             Bitmap myBitmap = BitmapFactory.decodeFile(filePath);
             image.setImageBitmap(myBitmap);
 
+
         }
+
         upperPage.addView(image);
 
         TextView text = new TextView(this);
@@ -94,7 +101,7 @@ LinearLayout upperPage,bottomPage;
         bottomPage.addView(text);
     }
 
-    public void resizeImage(final ImageView sv,final String filePath){
+    public void resizeImage(final ImageView sv,final String filePath,final int ID){
         LinearLayout.LayoutParams positionRules = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         sv.setLayoutParams(positionRules);
         sv.getLayoutParams().height=800;
@@ -108,6 +115,31 @@ LinearLayout upperPage,bottomPage;
                 startActivity(i);
             }
         });
+        sv.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Are you sure you want to delete this photo?");
+
+                builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        db.deletePhoto(ID);
+                        recreate();
+
+                    }
+                });
+                builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
+                return false;
+            }
+        });
     }
 
     public void resizeText(TextView sv){
@@ -119,4 +151,5 @@ LinearLayout upperPage,bottomPage;
         sv.setTextColor(Color.BLACK);
         positionRules.setMargins(10, 1, 10, 1);
     }
+
 }
