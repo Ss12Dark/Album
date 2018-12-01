@@ -44,7 +44,7 @@ public class AlbumsLobby extends AppCompatActivity {
                 builder.setTitle("Please enter Album Name:");
 
                 final EditText input = new EditText(AlbumsLobby.this);
-                input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_CLASS_TEXT);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
                 builder.setView(input);
 
                 builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -96,7 +96,7 @@ public class AlbumsLobby extends AppCompatActivity {
                 boolean next = true;
                 int album = all.get(i).getAlbumNum();
                 if(i==0){
-                    checks.add(album);
+//                    checks.add(album);
                     notGood=false;
                 }
                 while(notGood){
@@ -114,6 +114,7 @@ public class AlbumsLobby extends AppCompatActivity {
                     String AlNa = all.get(i).getAlna();
                     Button newAlbum = new Button(AlbumsLobby.this);
                     makeButton(newAlbum, album,AlNa);
+                    newAlbum.setBackground(getDrawable(R.drawable.albumstyle));
                     ll.addView(newAlbum);
                 }
                 i++;
@@ -129,16 +130,17 @@ public class AlbumsLobby extends AppCompatActivity {
         db.close();
     }
 
-    public void makeButton(Button sv, final int albumN,final String name){
+    public void makeButton(Button newAlbum, final int albumN,final String name){
         LinearLayout.LayoutParams positionRules = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        sv.setLayoutParams(positionRules);
-        sv.setText(name);
+        newAlbum.setLayoutParams(positionRules);
+        newAlbum.setText(name);
+        newAlbum.setTextSize(19);
         positionRules.setMargins(10, 10, 10, 10);
         numberCounter=albumN;
-        sv.setTag(numberCounter);
+        newAlbum.setTag(numberCounter);
         numberCounter++;
-        final int place =Integer.parseInt(sv.getTag().toString());
-        sv.setOnClickListener(new View.OnClickListener() {
+        final int place =Integer.parseInt(newAlbum.getTag().toString());
+        newAlbum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent next = new Intent(AlbumsLobby.this  ,  MainActivity.class);
@@ -148,7 +150,7 @@ public class AlbumsLobby extends AppCompatActivity {
                 startActivity(next);
             }
         });
-        sv.setOnLongClickListener(new View.OnLongClickListener() {
+        newAlbum.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 AlertDialog.Builder builder;

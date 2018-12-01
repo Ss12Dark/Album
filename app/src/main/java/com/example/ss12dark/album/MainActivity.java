@@ -200,6 +200,8 @@ String number;
             sv.setTextSize(20);
             sv.setTextColor(Color.BLACK);
             positionRules.setMargins(10, 1, 10, 1);
+            sv.setPadding(5,5,5,5);
+            sv.setBackground(getDrawable(R.drawable.textmain));
         }
 
         @Override

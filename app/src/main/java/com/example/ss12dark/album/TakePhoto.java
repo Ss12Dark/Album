@@ -46,8 +46,8 @@ public class TakePhoto extends AppCompatActivity {
 
         db = new MyDBHandler(this);
         Intent thisphoto = getIntent();
-        albomNo = thisphoto.getIntExtra("album",666);
-        alna = thisphoto.getStringExtra("alna");
+        albomNo = thisphoto.getIntExtra("album",666); //album = album number
+        alna = thisphoto.getStringExtra("alna"); //alna = album name
         setContentView(R.layout.activity_take_photo);
         imageV = (ImageView) findViewById(R.id.photo);
         title = (EditText) findViewById(R.id.title);
@@ -80,39 +80,48 @@ public class TakePhoto extends AppCompatActivity {
 
     public void save (View view) {
             if(title.getText().toString().equals("")) {
-                Toast.makeText(TakePhoto.this, "please fill the title text" , Toast.LENGTH_SHORT).show();
+                Toast.makeText(TakePhoto.this, "Please fill the title text" , Toast.LENGTH_SHORT).show();
 
             }else{
-                try {
-                    fileName = title.getText().toString();
-
-
-                    File finalFile;
-                    // CALL THIS METHOD TO GET THE ACTUAL PATH
-                    if (loadOrPicture == 2) {
-                        // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
-                        Uri tempUri = getImageUri(getApplicationContext(), imageBitmap);
-                        finalFile = new File(getRealPathFromURI(tempUri));
-                    }else{
-                        finalFile = new File(getRealPathFromURI(Selected_Image_Uri));
-                    }
-
-                    filePath = finalFile.toString();
-                    Photo photo = new Photo();
-                    photo.setName(fileName);
-                    photo.setAlbumNum(albomNo);
-                    photo.setUrl(filePath);
-                    photo.setAlna(alna);
-                    db.addPhoto(photo);
-                    db.close();
-                    finish();
-                    Toast.makeText(TakePhoto.this, "photo saved !", Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    Toast.makeText(TakePhoto.this, "Fail to save image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                if(title.getText().toString().length()>50){
+                    Toast.makeText(TakePhoto.this, "Text is too long" , Toast.LENGTH_SHORT).show();
+                }else {
+                    setAndSavePhoto();
                 }
             }
 
     }
+
+    public void setAndSavePhoto(){
+        try {
+            fileName = title.getText().toString();
+
+
+            File finalFile;
+            // CALL THIS METHOD TO GET THE ACTUAL PATH
+            if (loadOrPicture == 2) {
+                // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
+                Uri tempUri = getImageUri(getApplicationContext(), imageBitmap);
+                finalFile = new File(getRealPathFromURI(tempUri));
+            }else{
+                finalFile = new File(getRealPathFromURI(Selected_Image_Uri));
+            }
+
+            filePath = finalFile.toString();
+            Photo photo = new Photo();
+            photo.setName(fileName);
+            photo.setAlbumNum(albomNo);
+            photo.setUrl(filePath);
+            photo.setAlna(alna);
+            db.addPhoto(photo);
+            db.close();
+            finish();
+            Toast.makeText(TakePhoto.this, "photo saved !", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(TakePhoto.this, "Fail to save image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public void load (View view)
     {
         loadOrPicture = 1;

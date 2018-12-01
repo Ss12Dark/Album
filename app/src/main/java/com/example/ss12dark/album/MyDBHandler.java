@@ -57,16 +57,6 @@ public class MyDBHandler extends SQLiteOpenHelper{
         onCreate(db);
     }
 
-    public void updateWatch(int id){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String str = "UPDATE "+TABLE_PHOTOSS+" SET "+KEY_WATCH+" = "+KEY_WATCH+" + 1 WHERE "+KEY_ID+" = "+id;
-        db.execSQL(str);
-    }
-    public void resetWatch(int id){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String str = "UPDATE "+TABLE_PHOTOSS+" SET "+KEY_WATCH+" =  0 WHERE "+KEY_ID+" = "+id;
-        db.execSQL(str);
-    }
 
     public void clear() {
         SQLiteDatabase db = this.getWritableDatabase();

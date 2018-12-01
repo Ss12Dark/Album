@@ -7,6 +7,7 @@
     tools:context=".TakePhoto">
 
     <LinearLayout
+        android:background="@drawable/albumlobby"
         android:orientation="vertical"
         android:gravity="center"
         android:layout_width="match_parent"
@@ -20,7 +21,8 @@
             android:layout_width="250dp"
             android:layout_height="100dp">
             <EditText
-                android:hint="Add a Title"
+                android:background="@color/white"
+                android:hint="Add a Title (No longer than 50 letters)"
                 android:id="@+id/title"
                 android:layout_marginTop="10dp"
                 android:layout_width="250dp"
@@ -31,11 +33,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <Button
+                android:background="@drawable/albumstyle"
                 android:onClick="save"
                 android:text="save"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <Button
+                android:background="@drawable/buttonstyle"
                 android:onClick="load"
                 android:text="load"
                 android:layout_width="wrap_content"

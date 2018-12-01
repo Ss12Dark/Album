@@ -28,13 +28,13 @@ public class Logo extends AppCompatActivity {
     }
 
     public void appear(){
-        final ImageView s1 = (ImageView) findViewById(R.id.cap);
-        ViewPropertyAnimator viewPropertyAnimator = s1.animate().alpha(1f).setDuration(2000);
+        final ImageView DianaProductions = (ImageView) findViewById(R.id.cap);
+        ViewPropertyAnimator viewPropertyAnimator = DianaProductions.animate().alpha(1f).setDuration(2000);
         viewPropertyAnimator.setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                ViewPropertyAnimator viewPropertyAnimator2 =s1.animate().alpha(0f).setDuration(2000);
+                ViewPropertyAnimator viewPropertyAnimator2 =DianaProductions.animate().alpha(0f).setDuration(2000);
                 viewPropertyAnimator2.setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {

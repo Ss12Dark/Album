@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".AlbumsLobby">
 <LinearLayout
+    android:background="@drawable/albumlobby"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -14,11 +15,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
+            android:background="@drawable/buttonstyle"
             android:id="@+id/add"
             android:text="new album"
             android:layout_width="150dp"
             android:layout_height="wrap_content" />
         <Button
+            android:background="@drawable/buttonstyle"
             android:id="@+id/setting"
             android:text="setting"
             android:layout_width="150dp"
