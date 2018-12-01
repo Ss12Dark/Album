@@ -53,6 +53,7 @@ public class AlbumsLobby extends AppCompatActivity {
                         m_Text = input.getText().toString();
                         String albumname = m_Text;
                         makeButton(album,numberCounter,albumname);
+                        album.setBackground(getDrawable(R.drawable.albumstyle));
                         ll.addView(album);
                     }
                 });
