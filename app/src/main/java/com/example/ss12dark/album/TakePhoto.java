@@ -10,8 +10,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Matrix;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
@@ -27,7 +25,6 @@ import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 
 public class TakePhoto extends AppCompatActivity {
     ImageView imageV;
@@ -38,7 +35,7 @@ public class TakePhoto extends AppCompatActivity {
 
     int loadOrPicture=0;
     //load = 1; picture = 2;
-    private static final int OPEN_CAMERA = 1;
+    private static final int REQUEST_IMAGE_GALLERY = 1;
     private static final int SELECT_PHOTO = 2;
     Bitmap imageBitmap;
     Uri Selected_Image_Uri;
@@ -68,7 +65,7 @@ public class TakePhoto extends AppCompatActivity {
                 loadOrPicture = 2;
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                startActivityForResult(intent, OPEN_CAMERA);
+                startActivityForResult(intent, REQUEST_IMAGE_GALLERY);
 
             }
         });
@@ -163,7 +160,7 @@ public class TakePhoto extends AppCompatActivity {
     protected void onActivityResult( int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==OPEN_CAMERA && resultCode== RESULT_OK)
+        if(requestCode==REQUEST_IMAGE_GALLERY && resultCode== RESULT_OK)
         {
             imageBitmap = (Bitmap) data.getExtras().get("data");
             imageV.setBackgroundColor(Color.alpha(Color.WHITE));
@@ -173,59 +170,10 @@ public class TakePhoto extends AppCompatActivity {
 
         if (requestCode == SELECT_PHOTO && resultCode == RESULT_OK) {
             Selected_Image_Uri = data.getData();
-//            imageV.setBackgroundColor(Color.alpha(Color.WHITE));
-//            imageV.setImageURI(Selected_Image_Uri);
-
-
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-            Cursor cursor = this.getContentResolver().query(Selected_Image_Uri, filePathColumn, null, null, null);
-            cursor.moveToFirst();
-
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
-
-            Bitmap loadedBitmap = BitmapFactory.decodeFile(picturePath);
-
-            ExifInterface exif = null;
-            try {
-                File pictureFile = new File(picturePath);
-                exif = new ExifInterface(pictureFile.getAbsolutePath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            int orientation = ExifInterface.ORIENTATION_NORMAL;
-
-            if (exif != null)
-                orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-
-            switch (orientation) {
-                case ExifInterface.ORIENTATION_ROTATE_90:
-                    imageV.setBackgroundColor(Color.alpha(Color.WHITE));
-                    imageBitmap = rotateBitmap(loadedBitmap, 90);
-                    imageV.setImageBitmap(imageBitmap);
-                    break;
-                case ExifInterface.ORIENTATION_ROTATE_180:
-                    imageV.setBackgroundColor(Color.alpha(Color.WHITE));
-                    imageBitmap = rotateBitmap(loadedBitmap, 180);
-                    imageV.setImageBitmap(imageBitmap);
-                    break;
-
-                case ExifInterface.ORIENTATION_ROTATE_270:
-                    imageV.setBackgroundColor(Color.alpha(Color.WHITE));
-                    imageBitmap = rotateBitmap(loadedBitmap, 270);
-                    imageV.setImageBitmap(imageBitmap);
-                    break;
-            }
+            imageV.setBackgroundColor(Color.alpha(Color.WHITE));
+            imageV.setImageURI(Selected_Image_Uri);
         }
 
-    }
-
-    public static Bitmap rotateBitmap(Bitmap bitmap, int degrees) {
-        Matrix matrix = new Matrix();
-        matrix.postRotate(degrees);
-        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 
     public Uri getImageUri(Context inContext, Bitmap inImage) {

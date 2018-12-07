@@ -8,7 +8,6 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -31,8 +30,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-
-import static com.example.ss12dark.album.TakePhoto.rotateBitmap;
 
 public class MainActivity extends AppCompatActivity {
 TextView numberOfAlbum;
@@ -155,39 +152,8 @@ String number;
                 File imgFile = new  File(filePath);
                 if(imgFile.exists()){
 
-                    Bitmap loadedBitmap =decodeSampledBitmapFromURL(filePath);
-                    image.setImageBitmap(loadedBitmap);
-
-
-
-                    ExifInterface exif = null;
-                    try {
-                        File pictureFile = new File(filePath);
-                        exif = new ExifInterface(pictureFile.getAbsolutePath());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    int orientation = ExifInterface.ORIENTATION_NORMAL;
-
-                    if (exif != null)
-                        orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-
-                    switch (orientation) {
-                        case ExifInterface.ORIENTATION_ROTATE_90:
-                            loadedBitmap = rotateBitmap(loadedBitmap, 90);
-                            image.setImageBitmap(loadedBitmap);
-                            break;
-                        case ExifInterface.ORIENTATION_ROTATE_180:
-                            loadedBitmap = rotateBitmap(loadedBitmap, 180);
-                            image.setImageBitmap(loadedBitmap);
-                            break;
-
-                        case ExifInterface.ORIENTATION_ROTATE_270:
-                            loadedBitmap = rotateBitmap(loadedBitmap, 270);
-                            image.setImageBitmap(loadedBitmap);
-                            break;
-                    }
+                    Bitmap myBitmap =decodeSampledBitmapFromURL(filePath);
+                    image.setImageBitmap(myBitmap);
 
                 }
             }
