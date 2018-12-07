@@ -185,7 +185,7 @@ public class TakePhoto extends AppCompatActivity {
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
 
-            imageBitmap = BitmapFactory.decodeFile(Selected_Image_Uri+"");
+            Bitmap loadedBitmap = BitmapFactory.decodeFile(picturePath);
 
             ExifInterface exif = null;
             try {
@@ -201,24 +201,20 @@ public class TakePhoto extends AppCompatActivity {
                 orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
 
             switch (orientation) {
-                case ExifInterface.ORIENTATION_NORMAL:
-                    imageV.setBackgroundColor(Color.alpha(Color.WHITE));
-                    imageV.setImageBitmap(imageBitmap);
-                    break;
                 case ExifInterface.ORIENTATION_ROTATE_90:
                     imageV.setBackgroundColor(Color.alpha(Color.WHITE));
-                    imageBitmap = rotateBitmap(imageBitmap, 90);
+                    imageBitmap = rotateBitmap(loadedBitmap, 90);
                     imageV.setImageBitmap(imageBitmap);
                     break;
                 case ExifInterface.ORIENTATION_ROTATE_180:
                     imageV.setBackgroundColor(Color.alpha(Color.WHITE));
-                    imageBitmap = rotateBitmap(imageBitmap, 180);
+                    imageBitmap = rotateBitmap(loadedBitmap, 180);
                     imageV.setImageBitmap(imageBitmap);
                     break;
 
                 case ExifInterface.ORIENTATION_ROTATE_270:
                     imageV.setBackgroundColor(Color.alpha(Color.WHITE));
-                    imageBitmap = rotateBitmap(imageBitmap, 270);
+                    imageBitmap = rotateBitmap(loadedBitmap, 270);
                     imageV.setImageBitmap(imageBitmap);
                     break;
             }
