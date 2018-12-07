@@ -34,7 +34,7 @@ public class AlbumsLobby extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_albums_lobby);
 
-        pageColor = (LinearLayout) findViewById(R.id.pagecolor);
+        backgroundColor();
         db = new MyDBHandler(this);
         ll = (LinearLayout) findViewById(R.id.List);
         add = (Button) findViewById(R.id.add);

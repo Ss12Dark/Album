@@ -47,13 +47,13 @@ public class TakePhoto extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_take_photo);
+        pageColor = (LinearLayout) findViewById(R.id.pagecolor);
         backgroundColor();
         db = new MyDBHandler(this);
         Intent thisphoto = getIntent();
         albomNo = thisphoto.getIntExtra("album",666); //album = album number
         alna = thisphoto.getStringExtra("alna"); //alna = album name
-        setContentView(R.layout.activity_take_photo);
         imageV = (ImageView) findViewById(R.id.photo);
         title = (EditText) findViewById(R.id.title);
 
@@ -84,7 +84,7 @@ public class TakePhoto extends AppCompatActivity {
     }
 
     public void backgroundColor(){
-        pageColor = (LinearLayout) findViewById(R.id.pagecolor);
+
         SharedPreferences myPref = PreferenceManager.getDefaultSharedPreferences(this);
         int background =myPref.getInt("pageColor",1);
         switch (background){
