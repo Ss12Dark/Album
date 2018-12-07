@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".AlbumsLobby">
 <LinearLayout
-    android:id="@+id/pagecolor"
     android:background="@drawable/albumlobby"
     android:orientation="vertical"
     android:layout_width="match_parent"

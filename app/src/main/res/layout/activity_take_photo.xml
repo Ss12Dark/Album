@@ -7,7 +7,6 @@
     tools:context=".TakePhoto">
 
     <LinearLayout
-        android:id="@+id/pagecolor"
         android:background="@drawable/albumlobby"
         android:orientation="vertical"
         android:gravity="center"

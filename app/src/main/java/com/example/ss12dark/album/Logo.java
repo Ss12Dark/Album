@@ -2,11 +2,8 @@ package com.example.ss12dark.album;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ViewPropertyAnimator;
@@ -20,12 +17,14 @@ public class Logo extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_logo);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_logo);
 
         appear();
+
     }
 
     public void appear(){
@@ -46,7 +45,6 @@ public class Logo extends AppCompatActivity {
             }
         });
     }
-
     public void come(){
         Intent next = new Intent(this,AlbumsLobby.class);
         startActivity(next);

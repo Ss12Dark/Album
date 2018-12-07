@@ -6,19 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".Setting">
 <LinearLayout
-    android:id="@+id/pagecolor"
     android:background="@drawable/albumlobby"
     android:orientation="vertical"
     android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:background="@color/white"
-        android:textColor="@color/black"
-        android:textSize="25dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Reset all albums on App"/>
     <Button
 
         android:background="@drawable/albumstyle"
@@ -26,42 +18,6 @@
         android:text="reset all"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    <TextView
-        android:background="@color/white"
-        android:textColor="@color/black"
-        android:textSize="25dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Choose App theme"/>
-    <LinearLayout
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
-            android:tag="1"
-            android:onClick="changeBackground"
-            android:background="@drawable/albumstyle"
-            android:id="@+id/normal"
-            android:text="normal "
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <Button
-            android:tag="2"
-            android:onClick="changeBackground"
-            android:background="@drawable/albumstyle"
-            android:id="@+id/boy"
-            android:text="boy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <Button
-            android:tag="3"
-            android:onClick="changeBackground"
-            android:background="@drawable/albumstyle"
-            android:id="@+id/girl"
-            android:text="girl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
     <Button
         android:background="@drawable/buttonstyle"
         android:id="@+id/back"
