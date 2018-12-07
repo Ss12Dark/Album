@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 <ScrollView
-    android:background="@drawable/mainbot"
+    android:id="@+id/pagecolor"
+    android:background="@drawable/mainactivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
@@ -14,7 +15,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <HorizontalScrollView
-            android:background="@drawable/bothmananddtext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <LinearLayout
@@ -24,7 +24,6 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:id="@+id/upperPage"
-                    android:background="@drawable/main"
                     android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="370dp">
@@ -35,7 +34,6 @@
                     android:orientation="horizontal"
                     android:id="@+id/bottomPage"
                     android:gravity="center"
-                    android:background="@drawable/text"
                     android:layout_width="match_parent"
                     android:layout_height="100dp">
 

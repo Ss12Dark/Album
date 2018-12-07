@@ -4,12 +4,14 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -39,11 +42,13 @@ public class TakePhoto extends AppCompatActivity {
     int albomNo =0;
     String alna;
     String filePath;
+    LinearLayout pageColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        backgroundColor();
         db = new MyDBHandler(this);
         Intent thisphoto = getIntent();
         albomNo = thisphoto.getIntExtra("album",666); //album = album number
@@ -76,6 +81,17 @@ public class TakePhoto extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void backgroundColor(){
+        pageColor = (LinearLayout) findViewById(R.id.pagecolor);
+        SharedPreferences myPref = PreferenceManager.getDefaultSharedPreferences(this);
+        int background =myPref.getInt("pageColor",1);
+        switch (background){
+            case 1:{ pageColor.setBackground(getDrawable(R.drawable.albumlobby));break;}
+            case 2:{ pageColor.setBackground(getDrawable(R.drawable.albumlobbyblack));break;}
+            case 3:{ pageColor.setBackground(getDrawable(R.drawable.albumlobbypink));break;}
+        }
     }
 
     public void save (View view) {

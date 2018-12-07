@@ -2,7 +2,9 @@ package com.example.ss12dark.album;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -26,11 +28,13 @@ public class AlbumsLobby extends AppCompatActivity {
     int numberCounter=0;
     MyDBHandler db;
     String m_Text = "";
+    LinearLayout pageColor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_albums_lobby);
 
+        pageColor = (LinearLayout) findViewById(R.id.pagecolor);
         db = new MyDBHandler(this);
         ll = (LinearLayout) findViewById(R.id.List);
         add = (Button) findViewById(R.id.add);
@@ -81,6 +85,17 @@ public class AlbumsLobby extends AppCompatActivity {
         });
         createAlbums();
 
+    }
+
+    public void backgroundColor(){
+        pageColor = (LinearLayout) findViewById(R.id.pagecolor);
+        SharedPreferences myPref = PreferenceManager.getDefaultSharedPreferences(this);
+        int background =myPref.getInt("pageColor",1);
+        switch (background){
+            case 1:{ pageColor.setBackground(getDrawable(R.drawable.albumlobby));break;}
+            case 2:{ pageColor.setBackground(getDrawable(R.drawable.albumlobbyblack));break;}
+            case 3:{ pageColor.setBackground(getDrawable(R.drawable.albumlobbypink));break;}
+        }
     }
 
     public void createAlbums(){

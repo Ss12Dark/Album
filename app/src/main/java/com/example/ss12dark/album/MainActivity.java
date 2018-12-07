@@ -3,11 +3,13 @@ package com.example.ss12dark.album;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,11 +33,14 @@ MyDBHandler db;
 List <Photo> all;
 LinearLayout upperPage,bottomPage;
 String number;
+ScrollView pageColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        backgroundColor();
+
         upperPage = (LinearLayout) findViewById(R.id.upperPage);
         bottomPage = (LinearLayout) findViewById(R.id.bottomPage);
         numberOfAlbum = (TextView) findViewById(R.id.numberofplace);
@@ -74,6 +80,16 @@ String number;
         db.close();
     }
 
+    public void backgroundColor(){
+        pageColor = (ScrollView) findViewById(R.id.pagecolor);
+        SharedPreferences myPref = PreferenceManager.getDefaultSharedPreferences(this);
+        int background =myPref.getInt("pageColor",1);
+        switch (background){
+            case 1:{ pageColor.setBackground(getDrawable(R.drawable.mainactivity));break;}
+            case 2:{ pageColor.setBackground(getDrawable(R.drawable.mainactivityblack));break;}
+            case 3:{ pageColor.setBackground(getDrawable(R.drawable.mainactivitypink));break;}
+        }
+    }
 
     private class AsyncCaller extends AsyncTask<String, Void, Void>
     {
