@@ -4,12 +4,15 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -39,31 +43,21 @@ public class TakePhoto extends AppCompatActivity {
     int albomNo =0;
     String alna;
     String filePath;
+    LinearLayout pageColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_take_photo);
+        backgroundColor();
         db = new MyDBHandler(this);
         Intent thisphoto = getIntent();
         albomNo = thisphoto.getIntExtra("album",666); //album = album number
         alna = thisphoto.getStringExtra("alna"); //alna = album name
-        setContentView(R.layout.activity_take_photo);
         imageV = (ImageView) findViewById(R.id.photo);
         title = (EditText) findViewById(R.id.title);
 
-        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            if (shouldShowRequestPermissionRationale(
-                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            }
-
-            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-
-
-        }
+        checkPermission();
 
         imageV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +70,32 @@ public class TakePhoto extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void checkPermission(){
+        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (shouldShowRequestPermissionRationale(
+                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            }
+
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+
+
+        }
+    }
+
+    public void backgroundColor(){
+        pageColor = (LinearLayout) findViewById(R.id.pagecolor);
+        SharedPreferences myPref = PreferenceManager.getDefaultSharedPreferences(this);
+        int background =myPref.getInt("pageColor",1);
+        switch (background){
+            case 1:{ pageColor.setBackground(getDrawable(R.drawable.albumlobby));break;}
+            case 2:{ pageColor.setBackground(getDrawable(R.drawable.albumlobbyblack));break;}
+            case 3:{ pageColor.setBackground(getDrawable(R.drawable.albumlobbypink));break;}
+        }
     }
 
     public void save (View view) {
@@ -104,10 +124,18 @@ public class TakePhoto extends AppCompatActivity {
                 Uri tempUri = getImageUri(getApplicationContext(), imageBitmap);
                 finalFile = new File(getRealPathFromURI(tempUri));
             }else{
-                finalFile = new File(getRealPathFromURI(Selected_Image_Uri));
+                int sdkVersion = Build.VERSION.SDK_INT;
+                if(sdkVersion<24){
+                    filePath = Selected_Image_Uri+"";
+
+                }else{
+                    finalFile = new File(getRealPathFromURI(Selected_Image_Uri));
+                    filePath = finalFile.toString();
+                }
+
             }
 
-            filePath = finalFile.toString();
+
             Photo photo = new Photo();
             photo.setName(fileName);
             photo.setAlbumNum(albomNo);
@@ -122,15 +150,12 @@ public class TakePhoto extends AppCompatActivity {
         }
     }
 
-    public void load (View view)
-    {
+    public void load (View view){
         loadOrPicture = 1;
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, SELECT_PHOTO);
     }
-
-
 
     protected void onActivityResult( int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -150,7 +175,6 @@ public class TakePhoto extends AppCompatActivity {
         }
 
     }
-
 
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();

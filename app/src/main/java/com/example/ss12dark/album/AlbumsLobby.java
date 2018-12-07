@@ -2,7 +2,9 @@ package com.example.ss12dark.album;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -26,50 +28,24 @@ public class AlbumsLobby extends AppCompatActivity {
     int numberCounter=0;
     MyDBHandler db;
     String m_Text = "";
+    LinearLayout pageColor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_albums_lobby);
 
+        backgroundColor();
         db = new MyDBHandler(this);
         ll = (LinearLayout) findViewById(R.id.List);
-        add = (Button) findViewById(R.id.add);
 
+        add = (Button) findViewById(R.id.add);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Button album = new Button(AlbumsLobby.this);
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(AlbumsLobby.this);
-                builder.setTitle("Please enter Album Name:");
-
-                final EditText input = new EditText(AlbumsLobby.this);
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
-                builder.setView(input);
-
-                builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        m_Text = input.getText().toString();
-                        String albumname = m_Text;
-                        makeButton(album,numberCounter,albumname);
-                        album.setBackground(getDrawable(R.drawable.albumstyle));
-                        ll.addView(album);
-                    }
-                });
-                builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-                builder.show();
-
-
-
+                newAlbum();
             }
         });
+
         setting = (Button) findViewById(R.id.setting);
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +56,49 @@ public class AlbumsLobby extends AppCompatActivity {
             }
         });
         createAlbums();
+
+    }
+
+    public void backgroundColor(){
+        pageColor = (LinearLayout) findViewById(R.id.pagecolor);
+        SharedPreferences myPref = PreferenceManager.getDefaultSharedPreferences(this);
+        int background =myPref.getInt("pageColor",1);
+        switch (background){
+            case 1:{ pageColor.setBackground(getDrawable(R.drawable.albumlobby));break;}
+            case 2:{ pageColor.setBackground(getDrawable(R.drawable.albumlobbyblack));break;}
+            case 3:{ pageColor.setBackground(getDrawable(R.drawable.albumlobbypink));break;}
+        }
+    }
+
+    public void newAlbum(){
+        final Button album = new Button(AlbumsLobby.this);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(AlbumsLobby.this);
+        builder.setTitle("Please enter Album Name:");
+
+        final EditText input = new EditText(AlbumsLobby.this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                m_Text = input.getText().toString();
+                String albumname = m_Text;
+                makeButton(album,numberCounter,albumname);
+                album.setBackground(getDrawable(R.drawable.albumstyle));
+                ll.addView(album);
+            }
+        });
+        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+
 
     }
 

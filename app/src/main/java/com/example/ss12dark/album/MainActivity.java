@@ -3,11 +3,15 @@ package com.example.ss12dark.album;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,10 +21,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,22 +37,22 @@ Button newMe,refresh;
 MyDBHandler db;
 List <Photo> all;
 LinearLayout upperPage,bottomPage;
+ScrollView pageColor;
 String number;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        upperPage = (LinearLayout) findViewById(R.id.upperPage);
-        bottomPage = (LinearLayout) findViewById(R.id.bottomPage);
-        numberOfAlbum = (TextView) findViewById(R.id.numberofplace);
+
+        backgroundColor();
+        findViewsAndDB();
+
         Intent lobby = getIntent();
         final int num = lobby.getIntExtra("num",666);
         final String alna = lobby.getStringExtra("alna");
         numberOfAlbum.setText(alna);
 
-        newMe = (Button) findViewById(R.id.newM);
-        refresh = (Button) findViewById(R.id.refresh);
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,9 +69,6 @@ String number;
             }
         });
 
-
-
-        db = new MyDBHandler(this);
         number = num+"";
         all =db.getAllPhotoList(num);
         if(all.size()>0){
@@ -74,9 +79,27 @@ String number;
         db.close();
     }
 
+    public void findViewsAndDB(){
+        upperPage = (LinearLayout) findViewById(R.id.upperPage);
+        bottomPage = (LinearLayout) findViewById(R.id.bottomPage);
+        numberOfAlbum = (TextView) findViewById(R.id.numberofplace);
+        newMe = (Button) findViewById(R.id.newM);
+        refresh = (Button) findViewById(R.id.refresh);
+        db = new MyDBHandler(this);
+    }
 
-    private class AsyncCaller extends AsyncTask<String, Void, Void>
-    {
+    public void backgroundColor(){
+        pageColor = (ScrollView) findViewById(R.id.pagecolor);
+        SharedPreferences myPref = PreferenceManager.getDefaultSharedPreferences(this);
+        int background =myPref.getInt("pageColor",1);
+        switch (background){
+            case 1:{ pageColor.setBackground(getDrawable(R.drawable.mainactivity));break;}
+            case 2:{ pageColor.setBackground(getDrawable(R.drawable.mainactivityblack));break;}
+            case 3:{ pageColor.setBackground(getDrawable(R.drawable.mainactivitypink));break;}
+        }
+    }
+
+    private class AsyncCaller extends AsyncTask<String, Void, Void> {
         ProgressDialog pdLoading = new ProgressDialog(MainActivity.this);
 
         @Override
@@ -121,15 +144,19 @@ String number;
         private void createImage(String name, String filePath,int ID){
             final ImageView image = new ImageView(MainActivity.this);
             resizeImage(image,filePath,ID);
+            int sdkVersion = Build.VERSION.SDK_INT;
+            if(sdkVersion<24){
+                Uri myUri = Uri.parse(filePath);
+                image.setImageURI(myUri);
+            }else{
+                File imgFile = new  File(filePath);
+                if(imgFile.exists()){
 
-            File imgFile = new  File(filePath);
-            if(imgFile.exists()){
+                    Bitmap myBitmap =decodeSampledBitmapFromURL(filePath);
+                    image.setImageBitmap(myBitmap);
 
-                Bitmap myBitmap =decodeSampledBitmapFromURL(filePath);
-                image.setImageBitmap(myBitmap);
-
+                }
             }
-
             final TextView text = new TextView(MainActivity.this);
             resizeText(text);
             text.setText("\""+name+"\"");
