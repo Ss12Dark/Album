@@ -14,9 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".MainActivity" />
-        <activity android:name=".AlbumsLobby">
-
-        </activity>
+        <activity android:name=".AlbumsLobby"></activity>
         <activity android:name=".TakePhoto" />
         <activity android:name=".Setting" />
         <activity android:name=".FullScreenPhoto" />
@@ -27,6 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Search"></activity>
     </application>
 
 </manifest>

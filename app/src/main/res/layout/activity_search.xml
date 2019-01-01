@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Search">
+    <LinearLayout
+        android:background="@drawable/albumlobby"
+        android:orientation="vertical"
+        android:id="@+id/pagecolor2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_marginTop="25dp"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/name"
+                android:hint="photo name(description)"
+                android:background="@color/white"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/search"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@android:drawable/ic_menu_search" />
+        </LinearLayout>
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="500dp">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:id="@+id/upperPage"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="340dp">
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:id="@+id/bottomPage"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp">
+
+                </LinearLayout>
+            </LinearLayout>
+        </HorizontalScrollView>
+
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

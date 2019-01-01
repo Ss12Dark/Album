@@ -125,16 +125,17 @@ ScrollView pageColor;
                     int album = all.get(i).getAlbumNum();
                     if(album==num){
                         String name = all.get(i).getName();
+                        String date = all.get(i).getDate();
                         String filePath = all.get(i).getUrl();
                         int ID = all.get(i).getID();
-                        createImage(name,filePath,ID);
+                        createImage(name,filePath,ID,date);
                     }
                     i++;
                 }
 
         }
 
-        private void createImage(String name, String filePath,int ID){
+        private void createImage(String name, String filePath,int ID,String date){
             final ImageView image = new ImageView(MainActivity.this);
             resizeImage(image,filePath,ID);
 
@@ -148,7 +149,7 @@ ScrollView pageColor;
 
             final TextView text = new TextView(MainActivity.this);
             resizeText(text);
-            text.setText("\""+name+"\"");
+            text.setText(date+"\n"+"\""+name+"\"");
 
             MainActivity.this.runOnUiThread(new Runnable() {
                 @Override
@@ -170,7 +171,7 @@ ScrollView pageColor;
         private void resizeImage(final ImageView sv,final String filePath,final int ID){
             LinearLayout.LayoutParams positionRules = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             sv.setLayoutParams(positionRules);
-            sv.getLayoutParams().height=800;
+            sv.getLayoutParams().height=700;
             sv.getLayoutParams().width=575;
             positionRules.setMargins(10, 10, 10, 10);
             sv.setOnClickListener(new View.OnClickListener() {
@@ -211,7 +212,7 @@ ScrollView pageColor;
         private void resizeText(TextView sv){
             LinearLayout.LayoutParams positionRules = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             sv.setLayoutParams(positionRules);
-            sv.getLayoutParams().height=200;
+            sv.getLayoutParams().height=255;
             sv.getLayoutParams().width=575;
             sv.setTextSize(20);
             sv.setTextColor(Color.BLACK);

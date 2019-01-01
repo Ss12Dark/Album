@@ -24,6 +24,9 @@ import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class TakePhoto extends AppCompatActivity {
     ImageView imageV;
@@ -31,6 +34,7 @@ public class TakePhoto extends AppCompatActivity {
     int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1763;
     Activity a = this;
     MyDBHandler db;
+    Date date;
 
     int loadOrPicture=0;
     //load = 1; picture = 2;
@@ -123,12 +127,16 @@ public class TakePhoto extends AppCompatActivity {
                 finalFile = new File(getRealPathFromURI(Selected_Image_Uri));
             }
 
+            date = new Date(finalFile.lastModified());
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            String reportDate = df.format(date);
             filePath = finalFile.toString();
             Photo photo = new Photo();
             photo.setName(fileName);
             photo.setAlbumNum(albomNo);
             photo.setUrl(filePath);
             photo.setAlna(alna);
+            photo.setDate(reportDate);
             db.addPhoto(photo);
             db.close();
             finish();

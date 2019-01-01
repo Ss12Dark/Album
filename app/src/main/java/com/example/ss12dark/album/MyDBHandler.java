@@ -25,6 +25,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
     public static final String KEY_URL = "photoURL";
     public static final String KEY_WATCH = "albumNum";
     public static final String KEY_ALNA = "albumName";
+    public static final String KEY_DATE = "date";
 
     //We need to pass database information along to superclass because the super class doesn't have any default constructor
 
@@ -42,7 +43,8 @@ public class MyDBHandler extends SQLiteOpenHelper{
                 + KEY_NAME + " TEXT,"
                 + KEY_URL + " TEXT, "
                 + KEY_ALNA + " TEXT, "
-                + KEY_WATCH + " INTEGER"+")";
+                + KEY_WATCH + " INTEGER, "
+                + KEY_DATE + " TEXT"+")";
 
         db.execSQL(query);
     }
@@ -77,6 +79,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         values.put(KEY_ALNA, photo.getAlna());
         values.put(KEY_URL, photo.getUrl());
         values.put(KEY_NAME, photo.getName());
+        values.put(KEY_DATE, photo.getDate());
 
         db.insert(TABLE_PHOTOSS, null, values);
         db.close();
@@ -119,6 +122,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
                 photo.setUrl(cursor.getString(2));
                 photo.setAlna(cursor.getString(3));
                 photo.setAlbumNum(Integer.parseInt(cursor.getString(4)));
+                photo.setDate(cursor.getString(5));
 
                 // Adding contact to list
                 PhotoList.add(photo);
@@ -156,6 +160,38 @@ public class MyDBHandler extends SQLiteOpenHelper{
                     PhotoList.add(photo);
 
 
+
+            } while (cursor.moveToNext());
+        }
+
+        // return contact list
+        return PhotoList;
+    }
+
+    public List<Photo> getAllPhotoListByName(String name) {
+
+        List<Photo> PhotoList = new ArrayList<Photo>();
+
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_PHOTOSS + " WHERE "+KEY_NAME+" like '%"+ name+"%'";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+
+                Photo photo = new Photo();
+                photo.setID(Integer.parseInt(cursor.getString(0)));
+                photo.setName(cursor.getString(1));
+                photo.setUrl(cursor.getString(2));
+                photo.setAlna(cursor.getString(3));
+                photo.setAlbumNum(Integer.parseInt(cursor.getString(4)));
+                photo.setDate(cursor.getString(5));
+
+                // Adding contact to list
+                PhotoList.add(photo);
 
             } while (cursor.moveToNext());
         }

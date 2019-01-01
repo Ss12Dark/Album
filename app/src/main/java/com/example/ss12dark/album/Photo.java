@@ -1,5 +1,8 @@
 package com.example.ss12dark.album;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 public class Photo {
 
     private int ID;
@@ -7,6 +10,7 @@ public class Photo {
     private String name;
     private String url;
     private String alna;
+    private String date;
 
     public Photo(){}
 
@@ -22,11 +26,29 @@ public class Photo {
         this.name=name;
         this.url = url;
     }
+
     public  Photo(int albumNum, String url ,String alna, String name ){
         this.alna = alna;
         this.albumNum = albumNum;
         this.name=name;
         this.url = url;
+    }
+
+    public Photo(int ID, int albumNum, String name, String url, String alna, String date) {
+        this.ID = ID;
+        this.albumNum = albumNum;
+        this.name = name;
+        this.url = url;
+        this.alna = alna;
+        this.date = date;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getAlna() {

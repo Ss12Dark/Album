@@ -27,6 +27,14 @@
             android:text="setting"
             android:layout_width="150dp"
             android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/search"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/ic_menu_search" />
     </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"

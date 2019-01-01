@@ -37,8 +37,16 @@ public class AlbumsLobby extends AppCompatActivity {
         backgroundColor();
         db = new MyDBHandler(this);
         ll = (LinearLayout) findViewById(R.id.List);
-        add = (Button) findViewById(R.id.add);
+        final Button search = (Button) findViewById(R.id.search);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(AlbumsLobby.this,Search.class);
+                startActivity(i);
+            }
+        });
 
+        add = (Button) findViewById(R.id.add);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
