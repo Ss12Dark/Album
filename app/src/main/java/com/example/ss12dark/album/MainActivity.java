@@ -27,7 +27,7 @@ import java.io.File;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-TextView numberOfAlbum;
+TextView albumNameView;
 Button newMe,refresh;
 MyDBHandler db;
 List <Photo> all;
@@ -43,11 +43,11 @@ ScrollView pageColor;
 
         upperPage = (LinearLayout) findViewById(R.id.upperPage);
         bottomPage = (LinearLayout) findViewById(R.id.bottomPage);
-        numberOfAlbum = (TextView) findViewById(R.id.numberofplace);
+        albumNameView = (TextView) findViewById(R.id.numberofplace);
         Intent lobby = getIntent();
         final int num = lobby.getIntExtra("num",666);
         final String alna = lobby.getStringExtra("alna");
-        numberOfAlbum.setText(alna);
+        albumNameView.setText(alna);
 
         newMe = (Button) findViewById(R.id.newM);
         refresh = (Button) findViewById(R.id.refresh);
@@ -93,7 +93,7 @@ ScrollView pageColor;
 
     private class AsyncCaller extends AsyncTask<String, Void, Void>
     {
-        ProgressDialog pdLoading = new ProgressDialog(MainActivity.this);
+        ProgressDialog pdLoading = new ProgressDialog(MainActivity.this); //the loading massage in the screen
 
         @Override
         protected void onPreExecute() {
@@ -108,7 +108,7 @@ ScrollView pageColor;
 
         }
         @Override
-        protected Void doInBackground(String... params) {
+        protected Void doInBackground(String... params) { //getting the album number and put it in int variable
             String number = params[0];
             int num = Integer.parseInt(number);
             startAlbum(num);
@@ -120,13 +120,13 @@ ScrollView pageColor;
         private void startAlbum(int num) {
             int i = 0;
 
-
+                //running with loop on the "all" list of photos and making a images
                 while(i<all.size()){
                     int album = all.get(i).getAlbumNum();
-                    if(album==num){
+                    if(album==num){//checking if the album number is the same
                         String name = all.get(i).getName();
                         String date = all.get(i).getDate();
-                        String filePath = all.get(i).getUrl();
+                        String filePath = all.get(i).getUrl();//the path to the location of imgae in the phone
                         int ID = all.get(i).getID();
                         createImage(name,filePath,ID,date);
                     }
@@ -142,8 +142,8 @@ ScrollView pageColor;
             File imgFile = new  File(filePath);
             if(imgFile.exists()){
 
-                Bitmap myBitmap =decodeSampledBitmapFromURL(filePath);
-                image.setImageBitmap(myBitmap);
+                Bitmap myBitmap =decodeSampledBitmapFromURL(filePath);//half quality method
+                image.setImageBitmap(myBitmap);//set the imgae on the view
 
             }
 
@@ -163,14 +163,14 @@ ScrollView pageColor;
 
         private  Bitmap decodeSampledBitmapFromURL(String filePath) {
             final BitmapFactory.Options options = new BitmapFactory.Options();
-
+            //taking the image and the quality of the image half sized (bad quality)
             options.inSampleSize = 2;
             return BitmapFactory.decodeFile(filePath, options);
         }
 
         private void resizeImage(final ImageView sv,final String filePath,final int ID){
             LinearLayout.LayoutParams positionRules = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            sv.setLayoutParams(positionRules);
+            sv.setLayoutParams(positionRules); //settting the size of the image with hieght and width and the click and longclick listener action's
             sv.getLayoutParams().height=700;
             sv.getLayoutParams().width=575;
             positionRules.setMargins(10, 10, 10, 10);

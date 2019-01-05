@@ -116,7 +116,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         if (cursor.moveToFirst()) {
             do {
 
-                Photo photo = new Photo();
+                Photo photo = new Photo();//i make a new object of photo and put data values in it
                 photo.setID(Integer.parseInt(cursor.getString(0)));
                 photo.setName(cursor.getString(1));
                 photo.setUrl(cursor.getString(2));

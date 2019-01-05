@@ -18,6 +18,8 @@ public class Logo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_logo);
+
+        //set the screen to full using windowManager
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -29,12 +31,12 @@ public class Logo extends AppCompatActivity {
 
     public void appear(){
         final ImageView DianaProductions = (ImageView) findViewById(R.id.cap);
-        ViewPropertyAnimator viewPropertyAnimator = DianaProductions.animate().alpha(1f).setDuration(2000);
+        ViewPropertyAnimator viewPropertyAnimator = DianaProductions.animate().alpha(1f).setDuration(2000); //making the picture visable in 2 sec
         viewPropertyAnimator.setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                ViewPropertyAnimator viewPropertyAnimator2 =DianaProductions.animate().alpha(0f).setDuration(2000);
+                ViewPropertyAnimator viewPropertyAnimator2 =DianaProductions.animate().alpha(0f).setDuration(2000);//making the picture invisable in 2 sec
                 viewPropertyAnimator2.setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
@@ -45,6 +47,7 @@ public class Logo extends AppCompatActivity {
             }
         });
     }
+
     public void come(){
         Intent next = new Intent(this,AlbumsLobby.class);
         startActivity(next);

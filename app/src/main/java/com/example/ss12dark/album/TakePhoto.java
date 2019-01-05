@@ -38,8 +38,8 @@ public class TakePhoto extends AppCompatActivity {
 
     int loadOrPicture=0;
     //load = 1; picture = 2;
-    private static final int REQUEST_IMAGE_GALLERY = 1;
-    private static final int SELECT_PHOTO = 2;
+    private static final int CAMERA_ON = 2;
+    private static final int SELECT_PHOTO = 1;
     Bitmap imageBitmap;
     Uri Selected_Image_Uri;
     String fileName ;
@@ -78,9 +78,9 @@ public class TakePhoto extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadOrPicture = 2;
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//camera on
                 intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                startActivityForResult(intent, REQUEST_IMAGE_GALLERY);
+                startActivityForResult(intent, CAMERA_ON);
 
             }
         });
@@ -118,7 +118,7 @@ public class TakePhoto extends AppCompatActivity {
 
 
             File finalFile;
-            // CALL THIS METHOD TO GET THE ACTUAL PATH
+
             if (loadOrPicture == 2) {
                 // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
                 Uri tempUri = getImageUri(getApplicationContext(), imageBitmap);
@@ -126,7 +126,7 @@ public class TakePhoto extends AppCompatActivity {
             }else{
                 finalFile = new File(getRealPathFromURI(Selected_Image_Uri));
             }
-
+                //finaFile ====== path
             date = new Date(finalFile.lastModified());
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             String reportDate = df.format(date);
@@ -159,7 +159,7 @@ public class TakePhoto extends AppCompatActivity {
     protected void onActivityResult( int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==REQUEST_IMAGE_GALLERY && resultCode== RESULT_OK)
+        if(requestCode==CAMERA_ON && resultCode== RESULT_OK)
         {
             imageBitmap = (Bitmap) data.getExtras().get("data");
             imageV.setBackgroundColor(Color.alpha(Color.WHITE));

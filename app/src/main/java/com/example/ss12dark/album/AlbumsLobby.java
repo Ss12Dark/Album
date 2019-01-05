@@ -29,6 +29,7 @@ public class AlbumsLobby extends AppCompatActivity {
     MyDBHandler db;
     String m_Text = "";
     LinearLayout pageColor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,12 +46,12 @@ public class AlbumsLobby extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
+//add new album and set a dialog for getting the name
         add = (Button) findViewById(R.id.add);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Button album = new Button(AlbumsLobby.this);
+                final Button album = new Button(AlbumsLobby.this);//new album object
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(AlbumsLobby.this);
                 builder.setTitle("Please enter Album Name:");
@@ -113,7 +114,7 @@ public class AlbumsLobby extends AppCompatActivity {
         int i = 0;
 
         if (all.size()==i){
-
+//if the list is empty do nothing
         }else{
             while(i<all.size()){
                 boolean notGood = true;
@@ -123,11 +124,12 @@ public class AlbumsLobby extends AppCompatActivity {
 //                    checks.add(album);
                     notGood=false;
                 }
+                //after i take a photo i check if the album of the photo is already exist
                 while(notGood){
                     int j = 0;
                     while(j<checks.size()){
                         if(album==checks.get(j)){
-                            next =false;
+                            next =false;//if the album exist so do not make a buttom with his name
                         }
                         j++;
                     }
