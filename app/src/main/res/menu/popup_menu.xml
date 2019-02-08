@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/one"
-        android:title="One"/>
+        android:id="@+id/add"
+        android:title="Add Album"/>
 
     <item
-        android:id="@+id/two"
-        android:title="Two"/>
+        android:id="@+id/search"
+        android:title="Search for photos"/>
 
     <item
-        android:id="@+id/three"
-        android:title="Three"/>
+        android:id="@+id/setting"
+        android:title="Settings"/>
 
 </menu>

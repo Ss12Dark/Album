@@ -13,10 +13,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -27,7 +29,6 @@ import java.util.ListIterator;
 
 public class AlbumsLobby extends AppCompatActivity {
     LinearLayout ll;
-    Button add,setting;
     int numberCounter=0;
     MyDBHandler db;
     String m_Text = "";
@@ -41,60 +42,74 @@ public class AlbumsLobby extends AppCompatActivity {
         backgroundColor();
         db = new MyDBHandler(this);
         ll = (LinearLayout) findViewById(R.id.List);
-        final Button search = (Button) findViewById(R.id.search);
-        search.setOnClickListener(new View.OnClickListener() {
+
+        final Button menu = (Button) findViewById(R.id.menu);
+        menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(AlbumsLobby.this,Search.class);
-                startActivity(i);
-            }
-        });
-//add new album and set a dialog for getting the name
-        add = (Button) findViewById(R.id.add);
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Button album = new Button(AlbumsLobby.this);//new album object
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(AlbumsLobby.this);
-                builder.setTitle("Please enter Album Name:");
+                PopupMenu popup = new PopupMenu(AlbumsLobby.this, menu);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater()
+                        .inflate(R.menu.popup_menu, popup.getMenu());
 
-                final EditText input = new EditText(AlbumsLobby.this);
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
-                builder.setView(input);
+                //registering popup with OnMenuItemClickListener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId())   {
 
-                builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        m_Text = input.getText().toString();
-                        String albumname = m_Text;
-                        makeButton(album,numberCounter,albumname);
-                        album.setBackground(getDrawable(R.drawable.albumstyle));
-                        ll.addView(album);
+                            case R.id.add:
+                                final Button album = new Button(AlbumsLobby.this);//new album object
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(AlbumsLobby.this);
+                                builder.setTitle("Please enter Album Name:");
+
+                                final EditText input = new EditText(AlbumsLobby.this);
+                                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                                builder.setView(input);
+
+                                builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        m_Text = input.getText().toString();
+                                        String albumname = m_Text;
+                                        makeButton(album,numberCounter,albumname);
+                                        album.setBackground(getDrawable(R.drawable.albumstyle));
+                                        ll.addView(album);
+                                    }
+                                });
+                                builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                                builder.show();
+                                break;
+
+                            case R.id.search:
+                                Intent i = new Intent(AlbumsLobby.this,Search.class);
+                                startActivity(i);
+                                break;
+
+                            case R.id.setting:
+                                Intent j = new Intent(AlbumsLobby.this,Setting.class);
+                                startActivity(j);
+                                finish();
+                                break;
+
+                            default:
+                                break;
+                        }
+                        return true;
                     }
                 });
-                builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
 
-                builder.show();
-
-
-
+                popup.show();
             }
         });
-        setting = (Button) findViewById(R.id.setting);
-        setting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(AlbumsLobby.this,Setting.class);
-                startActivity(i);
-                finish();
-            }
-        });
+
         createAlbums();
 
     }
