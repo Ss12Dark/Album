@@ -23,7 +23,7 @@
             android:layout_height="100dp">
             <EditText
                 android:background="@color/white"
-                android:hint="Add a Title (No longer than 50 letters)"
+                android:hint="Add a Title (No longer than 50 letters),album name=default"
                 android:id="@+id/title"
                 android:layout_marginTop="10dp"
                 android:layout_width="250dp"

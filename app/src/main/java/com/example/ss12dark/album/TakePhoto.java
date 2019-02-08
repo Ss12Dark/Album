@@ -100,7 +100,8 @@ public class TakePhoto extends AppCompatActivity {
 
     public void save (View view) {
             if(title.getText().toString().equals("")) {
-                Toast.makeText(TakePhoto.this, "Please fill the title text" , Toast.LENGTH_SHORT).show();
+                title.setText(alna);
+                setAndSavePhoto();
 
             }else{
                 if(title.getText().toString().length()>50){
