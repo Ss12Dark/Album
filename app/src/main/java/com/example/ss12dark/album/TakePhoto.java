@@ -2,6 +2,11 @@ package com.example.ss12dark.album;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.SharedElementCallback;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,8 +16,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -140,6 +147,10 @@ public class TakePhoto extends AppCompatActivity {
             photo.setDate(reportDate);
             db.addPhoto(photo);
             db.close();
+
+            notifyNumber();
+
+
             finish();
             Toast.makeText(TakePhoto.this, "photo saved !", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
@@ -176,7 +187,6 @@ public class TakePhoto extends AppCompatActivity {
 
     }
 
-
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
@@ -196,5 +206,46 @@ public class TakePhoto extends AppCompatActivity {
             }
         }
         return path;
+    }
+
+    public void notifyNumber() {
+        SharedPreferences myPref = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = myPref.edit();
+        int N = (myPref.getInt("photoAddedNumberInLine", 0)) + 1;
+        editor.putInt("photoAddedNumberInLine", N);
+        String Title = "Achievement complete!";
+        String message="";
+        switch (N){
+            case 1:{message = "Congratulations on your first image!"; break;}
+            case 10:{message = "This is the 10th image you added ! cool!"; break;}
+            case 25:{message = "Well played on your 25th image - keep it coming"; break;}
+            case 50:{message = "Indeed nice collection of 50 photos. very nice!"; break;}
+            case 100:{message = "AMAZING! you added 100 photos 'till now"; break;}
+            case 500:{message = "WOW 500 photos WOW"; break;}
+            case 1000:{message = "OMG ,YOU ON '1000 PHOTOS ADEED' !!!!!!"; break;}
+        }
+        showNotification(Title,message);
+
+    }
+
+    private void showNotification(String title, String content) {
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("default",
+                    "YOUR_CHANNEL_NAME",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription("YOUR_NOTIFICATION_CHANNEL_DISCRIPTION");
+            mNotificationManager.createNotificationChannel(channel);
+        }
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), "default")
+                .setSmallIcon(R.mipmap.ic_launcher) // notification icon
+                .setContentTitle(title) // title for notification
+                .setContentText(content)// message for notification
+                .setAutoCancel(true); // clear notification after click
+        Intent intent = new Intent(getApplicationContext(), Logo.class);
+        PendingIntent pi = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(pi);
+        mNotificationManager.notify(0, mBuilder.build());
     }
 }

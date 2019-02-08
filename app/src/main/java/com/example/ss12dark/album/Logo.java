@@ -32,12 +32,7 @@ public class Logo extends AppCompatActivity {
 
     public void appear(){
         final ImageView DianaProductions = (ImageView) findViewById(R.id.cap);
-        DianaProductions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                come();
-            }
-        });
+
         ViewPropertyAnimator viewPropertyAnimator = DianaProductions.animate().alpha(1f).setDuration(2000); //making the picture visable in 2 sec
         viewPropertyAnimator.setListener(new AnimatorListenerAdapter() {
             @Override
