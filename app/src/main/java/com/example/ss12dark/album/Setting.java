@@ -48,6 +48,8 @@ public class Setting extends AppCompatActivity {
                 builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        SharedPreferences.Editor editor = myPref.edit();
+                        editor.putInt("photoAddedNumberInLine", 0);
                         db.clear();
                         db.close();
                     }
