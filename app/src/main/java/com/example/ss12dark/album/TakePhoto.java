@@ -17,8 +17,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,9 +33,11 @@ import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 public class TakePhoto extends AppCompatActivity {
     ImageView imageV;
@@ -80,6 +84,8 @@ public class TakePhoto extends AppCompatActivity {
 
 
         }
+
+
 
         imageV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,7 +136,7 @@ public class TakePhoto extends AppCompatActivity {
             if (loadOrPicture == 2) {
                 // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
                 Uri tempUri = getImageUri(getApplicationContext(), imageBitmap);
-                finalFile = new File(getRealPathFromURI(tempUri));
+                finalFile = new File(tempUri+"");
             }else{
                 finalFile = new File(getRealPathFromURI(Selected_Image_Uri));
             }
@@ -190,7 +196,8 @@ public class TakePhoto extends AppCompatActivity {
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, fileName, null);
+        String path =SaveImage(inImage);
+//        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, fileName, null);
         return Uri.parse(path);
     }
 
@@ -213,18 +220,19 @@ public class TakePhoto extends AppCompatActivity {
         SharedPreferences.Editor editor = myPref.edit();
         int N = (myPref.getInt("photoAddedNumberInLine", 0)) + 1;
         editor.putInt("photoAddedNumberInLine", N);
+        editor.apply();
         String Title = "Achievement complete!";
         String message="";
         switch (N){
-            case 1:{message = "Congratulations on your first image!"; break;}
-            case 10:{message = "This is the 10th image you added ! cool!"; break;}
-            case 25:{message = "Well played on your 25th image - keep it coming"; break;}
-            case 50:{message = "Indeed nice collection of 50 photos. very nice!"; break;}
-            case 100:{message = "AMAZING! you added 100 photos 'till now"; break;}
-            case 500:{message = "WOW 500 photos WOW"; break;}
-            case 1000:{message = "OMG ,YOU ON '1000 PHOTOS ADEED' !!!!!!"; break;}
+            case 1:{message = "Congratulations on your first image!"; showNotification(Title,message); break;}
+            case 10:{message = "This is the 10th image you added ! cool!";showNotification(Title,message); break;}
+            case 25:{message = "Well played on your 25th image - keep it coming";showNotification(Title,message); break;}
+            case 50:{message = "Indeed nice collection of 50 photos. very nice!";showNotification(Title,message); break;}
+            case 100:{message = "AMAZING! you added 100 photos 'till now";showNotification(Title,message); break;}
+            case 500:{message = "WOW 500 photos WOW";showNotification(Title,message); break;}
+            case 1000:{message = "OMG ,YOU ON '1000 PHOTOS ADEED' !!!!!!";showNotification(Title,message); break;}
         }
-        showNotification(Title,message);
+
 
     }
 
@@ -247,5 +255,30 @@ public class TakePhoto extends AppCompatActivity {
         PendingIntent pi = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(pi);
         mNotificationManager.notify(0, mBuilder.build());
+    }
+
+    private String SaveImage(Bitmap finalBitmap) {
+        File newFile= new File("" + File.separator + "test.png");
+        Random generator = new Random();
+        int n = 10000;
+        n = generator.nextInt(n);
+        try {
+            String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + File.separator + "album_photos";
+            File outputDir= new File(path);
+            if(!outputDir.exists()) {
+                boolean wasSuccessful =outputDir.mkdirs();
+                if (!wasSuccessful) {
+                    System.out.println("was not successful.");
+                }
+            }
+
+            newFile = new File(path + File.separator +fileName +"-"+n+".png");
+            FileOutputStream out = new FileOutputStream(newFile);
+            finalBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return newFile.toString();
     }
 }
