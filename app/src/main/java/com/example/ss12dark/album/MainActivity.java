@@ -1,5 +1,6 @@
 package com.example.ss12dark.album;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -78,14 +79,15 @@ ScrollView pageColor;
         db.close();
     }
 
+    @SuppressLint("ResourceAsColor")
     public void backgroundColor(){
         pageColor = (ScrollView) findViewById(R.id.pagecolor);
         SharedPreferences myPref = PreferenceManager.getDefaultSharedPreferences(this);
         int background =myPref.getInt("pageColor",1);
         switch (background){
-            case 1:{ pageColor.setBackground(getDrawable(R.drawable.mainactivity));break;}
-            case 2:{ pageColor.setBackground(getDrawable(R.drawable.mainactivityblack));break;}
-            case 3:{ pageColor.setBackground(getDrawable(R.drawable.mainactivitypink));break;}
+            case 1:{ pageColor.setBackgroundColor(R.color.blu);break;}
+            case 2:{ pageColor.setBackgroundColor(R.color.pur);break;}
+            case 3:{ pageColor.setBackgroundColor(R.color.pinki);break;}
         }
     }
 

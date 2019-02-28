@@ -37,14 +37,18 @@
                 android:background="@drawable/albumstyle"
                 android:onClick="save"
                 android:text="save"
+                android:textColor="#1C00DB"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
             <Button
-                android:background="@drawable/buttonstyle"
-                android:onClick="load"
-                android:text="load"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="@drawable/albumstyle"
+                android:onClick="load"
+                android:layout_marginLeft="45dp"
+                android:text="load"
+                android:textColor="#1C00DB" />
         </LinearLayout>
 
     </LinearLayout>

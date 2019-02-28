@@ -14,64 +14,69 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:id="@+id/upperPage"
-                    android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="340dp">
+                    android:layout_height="340dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:id="@+id/bottomPage"
-                    android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="130dp">
+                    android:layout_height="130dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
                 </LinearLayout>
             </LinearLayout>
         </HorizontalScrollView>
 
 
-
         <LinearLayout
 
-            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center">
 
             <LinearLayout
-                android:gravity="center"
-                android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <Button
-                    android:background="@drawable/buttonstyle"
                     android:id="@+id/newM"
-                    android:padding="15dp"
-                    android:text="new memory"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:gravity="center"
-                    android:id="@+id/numberofplace"
-                    android:background="@drawable/albumname"
-                    android:textSize="25dp"
-                    android:textColor="@color/black"
-                    android:text="1"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/albumstyle"
                     android:padding="15dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="new memory"
+                    android:textColor="#1C00DB" />
+
+                <TextView
+                    android:id="@+id/numberofplace"
                     android:layout_width="200dp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/albumstyle"
+                    android:gravity="center"
+                    android:padding="15dp"
+                    android:text="1"
+                    android:textColor="#1C00DB"
+                    android:textSize="25dp" />
             </LinearLayout>
 
 

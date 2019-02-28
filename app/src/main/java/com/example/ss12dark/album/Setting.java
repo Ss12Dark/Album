@@ -1,5 +1,6 @@
 package com.example.ss12dark.album;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -68,15 +69,15 @@ public class Setting extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("ResourceAsColor")
     public void backgroundColor(){
         pageColor = (LinearLayout) findViewById(R.id.pagecolor);
-        myPref = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences myPref = PreferenceManager.getDefaultSharedPreferences(this);
         int background =myPref.getInt("pageColor",1);
         switch (background){
-            case 1:{ pageColor.setBackground(getDrawable(R.drawable.albumlobby));break;}
-//            case 1:{ pageColor.setBackgroundColor(Color.RED);break;}
-            case 2:{ pageColor.setBackground(getDrawable(R.drawable.albumlobbyblack));break;}
-            case 3:{ pageColor.setBackground(getDrawable(R.drawable.albumlobbypink));break;}
+            case 1:{ pageColor.setBackgroundColor(R.color.blu);break;}
+            case 2:{ pageColor.setBackgroundColor(R.color.pur);break;}
+            case 3:{ pageColor.setBackgroundColor(R.color.pinki);break;}
         }
     }
 

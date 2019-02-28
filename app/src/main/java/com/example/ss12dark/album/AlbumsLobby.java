@@ -1,9 +1,11 @@
 package com.example.ss12dark.album;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
@@ -114,14 +116,15 @@ public class AlbumsLobby extends AppCompatActivity {
 
     }
 
+    @SuppressLint("ResourceAsColor")
     public void backgroundColor(){
         pageColor = (LinearLayout) findViewById(R.id.pagecolor);
         SharedPreferences myPref = PreferenceManager.getDefaultSharedPreferences(this);
         int background =myPref.getInt("pageColor",1);
         switch (background){
-            case 1:{ pageColor.setBackground(getDrawable(R.drawable.albumlobby));break;}
-            case 2:{ pageColor.setBackground(getDrawable(R.drawable.albumlobbyblack));break;}
-            case 3:{ pageColor.setBackground(getDrawable(R.drawable.albumlobbypink));break;}
+            case 1:{ pageColor.setBackgroundColor(R.color.blu);break;}
+            case 2:{ pageColor.setBackgroundColor(R.color.pur);break;}
+            case 3:{ pageColor.setBackgroundColor(R.color.pinki);break;}
         }
     }
 

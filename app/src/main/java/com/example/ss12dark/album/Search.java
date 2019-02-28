@@ -1,5 +1,6 @@
 package com.example.ss12dark.album;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -162,14 +164,15 @@ public class Search extends AppCompatActivity {
         sv.setBackground(getDrawable(R.drawable.textmain));
     }
 
+    @SuppressLint("ResourceAsColor")
     public void backgroundColor(){
-        pageColor = (LinearLayout) findViewById(R.id.pagecolor2);
+        pageColor = (LinearLayout) findViewById(R.id.pagecolor);
         SharedPreferences myPref = PreferenceManager.getDefaultSharedPreferences(this);
         int background =myPref.getInt("pageColor",1);
         switch (background){
-            case 1:{ pageColor.setBackground(getDrawable(R.drawable.albumlobby));break;}
-            case 2:{ pageColor.setBackground(getDrawable(R.drawable.albumlobbyblack));break;}
-            case 3:{ pageColor.setBackground(getDrawable(R.drawable.albumlobbypink));break;}
+            case 1:{ pageColor.setBackgroundColor(R.color.blu);break;}
+            case 2:{ pageColor.setBackgroundColor(R.color.pur);break;}
+            case 3:{ pageColor.setBackgroundColor(R.color.pinki);break;}
         }
     }
 }
