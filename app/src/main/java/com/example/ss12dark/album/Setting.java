@@ -3,6 +3,7 @@ package com.example.ss12dark.album;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -73,6 +74,7 @@ public class Setting extends AppCompatActivity {
         int background =myPref.getInt("pageColor",1);
         switch (background){
             case 1:{ pageColor.setBackground(getDrawable(R.drawable.albumlobby));break;}
+//            case 1:{ pageColor.setBackgroundColor(Color.RED);break;}
             case 2:{ pageColor.setBackground(getDrawable(R.drawable.albumlobbyblack));break;}
             case 3:{ pageColor.setBackground(getDrawable(R.drawable.albumlobbypink));break;}
         }
