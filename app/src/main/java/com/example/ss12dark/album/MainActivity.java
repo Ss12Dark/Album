@@ -32,7 +32,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 TextView albumNameView;
-Button newMe,refresh;
+Button newMe;
 MyDBHandler db;
 List <Photo> all;
 LinearLayout upperPage,bottomPage;
@@ -54,20 +54,14 @@ ScrollView pageColor;
         albumNameView.setText(alna);
 
         newMe = (Button) findViewById(R.id.newM);
-        refresh = (Button) findViewById(R.id.refresh);
-        refresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                recreate();
-            }
-        });
+
         newMe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent photo = new Intent(MainActivity.this,TakePhoto.class);
                 photo.putExtra("album",num);
                 photo.putExtra("alna",alna);
-                startActivity(photo);
+                startActivityForResult(photo,1);
             }
         });
 
@@ -92,6 +86,16 @@ ScrollView pageColor;
             case 1:{ pageColor.setBackground(getDrawable(R.drawable.mainactivity));break;}
             case 2:{ pageColor.setBackground(getDrawable(R.drawable.mainactivityblack));break;}
             case 3:{ pageColor.setBackground(getDrawable(R.drawable.mainactivitypink));break;}
+        }
+    }
+
+    protected void onActivityResult( int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode==1)
+        {
+            recreate();
+
         }
     }
 
