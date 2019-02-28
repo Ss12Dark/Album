@@ -25,6 +25,7 @@ public class Setting extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+        myPref = PreferenceManager.getDefaultSharedPreferences(this);
         backgroundColor();
         back = (Button) findViewById(R.id.back);
         reset = (Button) findViewById(R.id.reset);
@@ -52,6 +53,7 @@ public class Setting extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         SharedPreferences.Editor editor = myPref.edit();
                         editor.putInt("photoAddedNumberInLine", 0);
+                        editor.apply();
                         db.clear();
                         db.close();
                     }
@@ -69,24 +71,21 @@ public class Setting extends AppCompatActivity {
         });
     }
 
-    @SuppressLint("ResourceAsColor")
+
     public void backgroundColor(){
         pageColor = (LinearLayout) findViewById(R.id.pagecolor);
         SharedPreferences myPref = PreferenceManager.getDefaultSharedPreferences(this);
         int background =myPref.getInt("pageColor",1);
         switch (background){
-<<<<<<< HEAD
-            case 1:{ pageColor.setBackgroundColor(R.color.blu);break;}
-            case 2:{ pageColor.setBackgroundColor(R.color.pur);break;}
-            case 3:{ pageColor.setBackgroundColor(R.color.pinki);break;}
-=======
-            case 1:{ pageColor.setBackground(getDrawable(R.drawable.albumlobby));break;}
-            case 2:{ pageColor.setBackground(getDrawable(R.drawable.albumlobbyblack));break;}
-            case 3:{ pageColor.setBackground(getDrawable(R.drawable.albumlobbypink));break;}
-//            case 1:{ pageColor.setBackgroundColor(getColor(R.color.blu));break;}
-//            case 2:{ pageColor.setBackgroundColor(getColor(R.color.pinki));break;}
-//            case 3:{ pageColor.setBackgroundColor(getColor(R.color.greeny));break;}
->>>>>>> ad45d41e5feb2a77aa821b89e2ee8e50b592cca5
+
+
+//            case 1:{ pageColor.setBackground(getDrawable(R.drawable.albumlobby));break;}
+//            case 2:{ pageColor.setBackground(getDrawable(R.drawable.albumlobbyblack));break;}
+//            case 3:{ pageColor.setBackground(getDrawable(R.drawable.albumlobbypink));break;}
+            case 1:{ pageColor.setBackgroundColor(getColor(R.color.blu));break;}
+            case 2:{ pageColor.setBackgroundColor(getColor(R.color.pinki));break;}
+            case 3:{ pageColor.setBackgroundColor(getColor(R.color.pur));break;}
+
         }
     }
 

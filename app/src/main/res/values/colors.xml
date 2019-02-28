@@ -9,15 +9,14 @@
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
 
-<<<<<<< HEAD
     <color name="pinki">#f2bcf8</color>
     <color name="pur">#B39AFD</color>
     <color name="blu">#90C4F9</color>
-=======
-    <color name="blu">#0090ff</color>
-    <color name="pinki">#fb00ff</color>
+
+    <color name="b5lu">#0090ff</color>
+    <color name="pi5nki">#fb00ff</color>
     <color name="greeny">#00ff08</color>
->>>>>>> ad45d41e5feb2a77aa821b89e2ee8e50b592cca5
+
 
     <color name="black_overlay">#66000000</color>
 </resources>

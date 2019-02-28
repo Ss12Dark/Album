@@ -38,7 +38,7 @@ MyDBHandler db;
 List <Photo> all;
 LinearLayout upperPage,bottomPage;
 String number;
-ScrollView pageColor;
+LinearLayout pageColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,15 +79,15 @@ ScrollView pageColor;
         db.close();
     }
 
-    @SuppressLint("ResourceAsColor")
+
     public void backgroundColor(){
-        pageColor = (ScrollView) findViewById(R.id.pagecolor);
+        pageColor = (LinearLayout) findViewById(R.id.pagecolor2);
         SharedPreferences myPref = PreferenceManager.getDefaultSharedPreferences(this);
         int background =myPref.getInt("pageColor",1);
         switch (background){
-            case 1:{ pageColor.setBackgroundColor(R.color.blu);break;}
-            case 2:{ pageColor.setBackgroundColor(R.color.pur);break;}
-            case 3:{ pageColor.setBackgroundColor(R.color.pinki);break;}
+            case 1:{ pageColor.setBackgroundColor(getColor(R.color.blu));break;}
+            case 2:{ pageColor.setBackgroundColor(getColor(R.color.pinki));break;}
+            case 3:{ pageColor.setBackgroundColor(getColor(R.color.pur));break;}
         }
     }
 

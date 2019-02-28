@@ -102,15 +102,15 @@ public class TakePhoto extends AppCompatActivity {
 
     }
 
-    @SuppressLint("ResourceAsColor")
+
     public void backgroundColor(){
         pageColor = (LinearLayout) findViewById(R.id.pagecolor);
         SharedPreferences myPref = PreferenceManager.getDefaultSharedPreferences(this);
         int background =myPref.getInt("pageColor",1);
         switch (background){
-            case 1:{ pageColor.setBackgroundColor(R.color.blu);break;}
-            case 2:{ pageColor.setBackgroundColor(R.color.pur);break;}
-            case 3:{ pageColor.setBackgroundColor(R.color.pinki);break;}
+            case 1:{ pageColor.setBackgroundColor(getColor(R.color.blu));break;}
+            case 2:{ pageColor.setBackgroundColor(getColor(R.color.pinki));break;}
+            case 3:{ pageColor.setBackgroundColor(getColor(R.color.pur));break;}
         }
     }
 
