@@ -75,9 +75,18 @@ public class Setting extends AppCompatActivity {
         SharedPreferences myPref = PreferenceManager.getDefaultSharedPreferences(this);
         int background =myPref.getInt("pageColor",1);
         switch (background){
+<<<<<<< HEAD
             case 1:{ pageColor.setBackgroundColor(R.color.blu);break;}
             case 2:{ pageColor.setBackgroundColor(R.color.pur);break;}
             case 3:{ pageColor.setBackgroundColor(R.color.pinki);break;}
+=======
+            case 1:{ pageColor.setBackground(getDrawable(R.drawable.albumlobby));break;}
+            case 2:{ pageColor.setBackground(getDrawable(R.drawable.albumlobbyblack));break;}
+            case 3:{ pageColor.setBackground(getDrawable(R.drawable.albumlobbypink));break;}
+//            case 1:{ pageColor.setBackgroundColor(getColor(R.color.blu));break;}
+//            case 2:{ pageColor.setBackgroundColor(getColor(R.color.pinki));break;}
+//            case 3:{ pageColor.setBackgroundColor(getColor(R.color.greeny));break;}
+>>>>>>> ad45d41e5feb2a77aa821b89e2ee8e50b592cca5
         }
     }
 
