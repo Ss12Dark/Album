@@ -74,9 +74,11 @@ public class Setting extends AppCompatActivity {
         int background =myPref.getInt("pageColor",1);
         switch (background){
             case 1:{ pageColor.setBackground(getDrawable(R.drawable.albumlobby));break;}
-//            case 1:{ pageColor.setBackgroundColor(Color.RED);break;}
             case 2:{ pageColor.setBackground(getDrawable(R.drawable.albumlobbyblack));break;}
             case 3:{ pageColor.setBackground(getDrawable(R.drawable.albumlobbypink));break;}
+//            case 1:{ pageColor.setBackgroundColor(getColor(R.color.blu));break;}
+//            case 2:{ pageColor.setBackgroundColor(getColor(R.color.pinki));break;}
+//            case 3:{ pageColor.setBackgroundColor(getColor(R.color.greeny));break;}
         }
     }
 
