@@ -8,6 +8,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.SharedElementCallback;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,6 +17,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -60,6 +63,7 @@ public class TakePhoto extends AppCompatActivity {
     String alna;
     String filePath;
     LinearLayout pageColor;
+    ContentValues values;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,14 +91,30 @@ public class TakePhoto extends AppCompatActivity {
 
         }
 
+        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
 
+            if (shouldShowRequestPermissionRationale(
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            }
+
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    1788);
+
+
+        }
 
         imageV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loadOrPicture = 2;
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//camera on
-                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                values = new ContentValues();
+                values.put(MediaStore.Images.Media.TITLE, "New Picture");
+                values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+                Selected_Image_Uri = getContentResolver().insert(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Selected_Image_Uri);
                 startActivityForResult(intent, CAMERA_ON);
 
             }
@@ -136,13 +156,8 @@ public class TakePhoto extends AppCompatActivity {
 
             File finalFile;
 
-            if (loadOrPicture == 2) {
-                // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
-                Uri tempUri = getImageUri(getApplicationContext(), imageBitmap);
-                finalFile = new File(tempUri+"");
-            }else{
                 finalFile = new File(getRealPathFromURI(Selected_Image_Uri));
-            }
+
                 //finaFile ====== path
             date = new Date(finalFile.lastModified());
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -161,7 +176,7 @@ public class TakePhoto extends AppCompatActivity {
 
 
             finish();
-            Toast.makeText(TakePhoto.this, "photo saved !", Toast.LENGTH_SHORT).show();
+
         } catch (Exception e) {
             Toast.makeText(TakePhoto.this, "Fail to save image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -182,9 +197,16 @@ public class TakePhoto extends AppCompatActivity {
 
         if(requestCode==CAMERA_ON && resultCode== RESULT_OK)
         {
-            imageBitmap = (Bitmap) data.getExtras().get("data");
-            imageV.setBackgroundColor(Color.alpha(Color.WHITE));
-            imageV.setImageBitmap(imageBitmap);
+            try {
+                imageBitmap = MediaStore.Images.Media.getBitmap(
+                        getContentResolver(), Selected_Image_Uri);
+                imageV.setBackgroundColor(Color.alpha(Color.WHITE));
+                imageV.setImageBitmap(imageBitmap);
+
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         }
 
@@ -196,13 +218,7 @@ public class TakePhoto extends AppCompatActivity {
 
     }
 
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path =SaveImage(inImage);
-//        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, fileName, null);
-        return Uri.parse(path);
-    }
+
 
     public String getRealPathFromURI(Uri uri) {
         String path = "";
@@ -259,6 +275,7 @@ public class TakePhoto extends AppCompatActivity {
         mBuilder.setContentIntent(pi);
         mNotificationManager.notify(0, mBuilder.build());
     }
+
 
     private String SaveImage(Bitmap finalBitmap) {
         File newFile= new File("" + File.separator + "test.png");
