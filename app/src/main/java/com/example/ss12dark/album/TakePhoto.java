@@ -203,7 +203,7 @@ public class TakePhoto extends AppCompatActivity {
                 imageV.setBackgroundColor(Color.alpha(Color.WHITE));
                 imageV.setImageBitmap(imageBitmap);
 
-                
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
