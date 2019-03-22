@@ -11,15 +11,15 @@ import java.util.List;
 
 
 //this class handles the all database tasks and extends the SQLiteOpenHelper (a build class)
-//in this class we must to implement the methods "onCreate" and "onUpgrade" from the SQLiteOpenHelper class
+//in this class we must to implement the methods "onCreate" and "onUpgrade" from the SQLiteOpenHelper class - - - but not have to use onUpgrade (myabe for updates or other features)
 public class MyDBHandler extends SQLiteOpenHelper{
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 1; //using standard version of sqlite
+//we will use final strings to set the sqlite table and to help in future commands here
+    private static final String DATABASE_NAME = "photoLab";//name of the whole db
 
-    private static final String DATABASE_NAME = "photoLab";
-
-    public static final String TABLE_PHOTOSS = "Photos";
-
+    public static final String TABLE_PHOTOSS = "Photos";//the photo table
+//---------------------now i will add the photo class factors ---------------------------
     public static final String KEY_ID = "id";
     public static final String KEY_NAME = "photoName";
     public static final String KEY_URL = "photoURL";
@@ -50,7 +50,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {//"we must to implement the method "onUpgrade" from the SQLiteOpenHelper class"
 
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PHOTOSS);
@@ -60,8 +60,9 @@ public class MyDBHandler extends SQLiteOpenHelper{
     }
 
 
-    public void clear() {
+    public void clear() {//i use this method to delete all the albums and photos in the app at the setting menu
         SQLiteDatabase db = this.getWritableDatabase();
+        //-----------using sql quarry to execute commands----------
         db.delete(TABLE_PHOTOSS,null,null);
         db.execSQL("delete from "+ TABLE_PHOTOSS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PHOTOSS);
@@ -70,49 +71,42 @@ public class MyDBHandler extends SQLiteOpenHelper{
     }
 
 
-    public void addPhoto(Photo photo){
-        SQLiteDatabase db = this.getWritableDatabase();
+    public void addPhoto(Photo photo){//this is the add photo part in the database
+        SQLiteDatabase db = this.getWritableDatabase();//we are getting the option to write into the db
 
-        ContentValues values = new ContentValues();
-
+        ContentValues values = new ContentValues();//we set values variable to easy add all the photo factors to the table in wanted order
+//geting the values for the photo that was sended and add them to db values
         values.put(KEY_WATCH, photo.getAlbumNum());
         values.put(KEY_ALNA, photo.getAlna());
         values.put(KEY_URL, photo.getUrl());
         values.put(KEY_NAME, photo.getName());
         values.put(KEY_DATE, photo.getDate());
 
-        db.insert(TABLE_PHOTOSS, null, values);
-        db.close();
+        db.insert(TABLE_PHOTOSS, null, values);//insert all of them
+        db.close();//close the db
     }
 
 
-    public boolean deleteAlbum(int album) {
-
+    public void deleteAlbum(int album) {//method for deleting a specific album and all the photo he have inside
         SQLiteDatabase db = this.getWritableDatabase();
-
-        return db.delete(TABLE_PHOTOSS, KEY_WATCH + "=" + album, null) > 0;
-
+        db.delete(TABLE_PHOTOSS, KEY_WATCH + "=" + album, null);
     }
 
-    public boolean deletePhoto(int ID) {
-
+    public void deletePhoto(int ID) {//method for deleting a single photo
         SQLiteDatabase db = this.getWritableDatabase();
-
-        return db.delete(TABLE_PHOTOSS, KEY_ID + "=" + ID, null) > 0;
-
+        db.delete(TABLE_PHOTOSS, KEY_ID + "=" + ID, null);
     }
 
-    public List<Photo> getAllPhotoList(int album) {
+    public List<Photo> getAllPhotoList(int album) {//im using this method to get all the photo in the same album to display in main activity
 
-        List<Photo> PhotoList = new ArrayList<Photo>();
-
-        // Select All Query
+        List<Photo> PhotoList = new ArrayList<Photo>();//making alist to put all the photos inside anddd i will return in back after done
+        // Select Query with the requested album number
         String selectQuery = "SELECT  * FROM " + TABLE_PHOTOSS + " WHERE "+KEY_WATCH+" = "+ album;
 
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        Cursor cursor = db.rawQuery(selectQuery, null);//mouse like that going through rows and column
 
-        // looping through all rows and adding to list
+        // looping through all columns and adding to list
         if (cursor.moveToFirst()) {
             do {
 
@@ -124,19 +118,19 @@ public class MyDBHandler extends SQLiteOpenHelper{
                 photo.setAlbumNum(Integer.parseInt(cursor.getString(4)));
                 photo.setDate(cursor.getString(5));
 
-                // Adding contact to list
+                // Adding photo to list
                 PhotoList.add(photo);
 
-            } while (cursor.moveToNext());
+            } while (cursor.moveToNext());//got to the next row
         }
 
-        // return contact list
+        // return photo list
         return PhotoList;
     }
 
-    public List<Photo> getAllAlbumList() {
+    public List<Photo> getAllAlbumList() {//using this method for the lobby album menu and gets all the photos
 
-        List<Photo> PhotoList = new ArrayList<Photo>();
+        List<Photo> PhotoList = new ArrayList<Photo>();//making alist to put all the photos inside anddd i will return in back after done
 //TODO: make it better whitout taking all the photos and just the album numbers
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_PHOTOSS;
@@ -144,7 +138,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        // looping through all rows and adding to list
+        // looping through all columns and adding to list
         if (cursor.moveToFirst()) {
             do {
 
@@ -155,30 +149,30 @@ public class MyDBHandler extends SQLiteOpenHelper{
                 photo.setAlna(cursor.getString(3));
                 photo.setAlbumNum(Integer.parseInt(cursor.getString(4)));
 
-                // Adding contact to list
+                // Adding photo to list
 
                     PhotoList.add(photo);
 
 
 
-            } while (cursor.moveToNext());
+            } while (cursor.moveToNext());//got to the next row
         }
 
-        // return contact list
+        // return photo list
         return PhotoList;
     }
 
-    public List<Photo> getAllPhotoListByName(String name) {
+    public List<Photo> getAllPhotoListByName(String name) {//im using this method for the search feature
 
-        List<Photo> PhotoList = new ArrayList<Photo>();
+        List<Photo> PhotoList = new ArrayList<Photo>();//making alist to put all the photos inside anddd i will return in back after done
 
-        // Select All Query
+        // Select a specific photos from the table by searching the name
         String selectQuery = "SELECT  * FROM " + TABLE_PHOTOSS + " WHERE "+KEY_NAME+" like '%"+ name+"%'";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        // looping through all rows and adding to list
+        // looping through all columns and adding to list
         if (cursor.moveToFirst()) {
             do {
 
@@ -190,13 +184,13 @@ public class MyDBHandler extends SQLiteOpenHelper{
                 photo.setAlbumNum(Integer.parseInt(cursor.getString(4)));
                 photo.setDate(cursor.getString(5));
 
-                // Adding contact to list
+                // Adding photo to list
                 PhotoList.add(photo);
 
-            } while (cursor.moveToNext());
+            } while (cursor.moveToNext());//go to the next row
         }
 
-        // return contact list
+        // return photo list list
         return PhotoList;
     }
 

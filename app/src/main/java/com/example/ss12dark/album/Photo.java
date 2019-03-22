@@ -3,46 +3,18 @@ package com.example.ss12dark.album;
 import java.text.DateFormat;
 import java.util.Date;
 
-public class Photo {
+public class Photo {//in my app im using only one obgect class for photos and albums because albums got only number and name and we can just ask the photo wich album he belongs
 
-    private int ID;
-    private int albumNum;
-    private String name;
-    private String url;
-    private String alna;
-    private String date;
+    private int ID; //for database use
+    private int albumNum;//album number
+    private String name;//name of the photo (discription)
+    private String url;//place in the device
+    private String alna;//album name
+    private String date;//date of the photo
 
-    public Photo(){}
+    public Photo(){} //using this for empty initial (- no other constructors in needed)
 
-    public  Photo(int albumNum, String url , String name ){
-        this.albumNum = albumNum;
-        this.name=name;
-        this.url = url;
-    }
-
-    public  Photo(int ID, int albumNum, String url , String name ){
-        this.ID = ID;
-        this.albumNum = albumNum;
-        this.name=name;
-        this.url = url;
-    }
-
-    public  Photo(int albumNum, String url ,String alna, String name ){
-        this.alna = alna;
-        this.albumNum = albumNum;
-        this.name=name;
-        this.url = url;
-    }
-
-    public Photo(int ID, int albumNum, String name, String url, String alna, String date) {
-        this.ID = ID;
-        this.albumNum = albumNum;
-        this.name = name;
-        this.url = url;
-        this.alna = alna;
-        this.date = date;
-    }
-
+    //standard "get and set" for each factor------------------so i can edit them or get the data from the in the application code------------------------------------------
     public String getDate() {
         return date;
     }

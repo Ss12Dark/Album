@@ -18,38 +18,37 @@ public class Logo extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_logo);
-
         //set the screen to full using windowManager
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_logo);
 
-        appear();
-
+        appear(); //using method for more orgenized code (maybe to add features in the future)
     }
 
     public void appear(){
-        final ImageView DianaProductions = (ImageView) findViewById(R.id.cap);
+        final ImageView DianaProductions = (ImageView) findViewById(R.id.cap); //get the image view from xml and set final so i can use it in sub-listener method
 
-        ViewPropertyAnimator viewPropertyAnimator = DianaProductions.animate().alpha(1f).setDuration(2000); //making the picture visable in 2 sec
+//----------------------now i will use ViewPropertyAnimator to fade in and out my app logo at the start-----------------------
+
+        ViewPropertyAnimator viewPropertyAnimator = DianaProductions.animate().alpha(1f).setDuration(2000); //making the picture visable in 2 sec using alpha
         viewPropertyAnimator.setListener(new AnimatorListenerAdapter() {
             @Override
-            public void onAnimationEnd(Animator animation) {
+            public void onAnimationEnd(Animator animation) {//here im checking when the fade in is ending so i can start the fade out - - - still using same animator
                 super.onAnimationEnd(animation);
                 ViewPropertyAnimator viewPropertyAnimator2 =DianaProductions.animate().alpha(0f).setDuration(2000);//making the picture invisable in 2 sec
                 viewPropertyAnimator2.setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         super.onAnimationEnd(animation);
-                        come();
+                        come();//and now call the method to continue to the app
                     }
                 });
             }
         });
     }
-
+//starting the albums lobby and finish this logo intent-----------
     public void come(){
         Intent next = new Intent(this,AlbumsLobby.class);
         startActivity(next);
