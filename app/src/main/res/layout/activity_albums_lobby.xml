@@ -29,11 +29,20 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent">
         <LinearLayout
+            android:gravity="center"
             android:orientation="vertical"
             android:id="@+id/List"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <Button
+                android:layout_marginTop="50dp"
+                android:id="@+id/first"
+                android:visibility="visible"
+                android:text="@string/to_add_your_first_album_click_here"
+                android:alpha="0.5"
+                android:layout_width="300dp"
+                android:layout_height="300dp" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

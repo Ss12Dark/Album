@@ -178,7 +178,7 @@ public class TakePhoto extends AppCompatActivity {
             finish();
 
         } catch (Exception e) {
-            Toast.makeText(TakePhoto.this, "Fail to save image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(TakePhoto.this, getString(R.string.fail) + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -240,16 +240,16 @@ public class TakePhoto extends AppCompatActivity {
         int N = (myPref.getInt("photoAddedNumberInLine", 0)) + 1;
         editor.putInt("photoAddedNumberInLine", N);
         editor.apply();
-        String Title = "Achievement complete!";
+        String Title = getString(R.string.complete);
         String message="";
         switch (N){
-            case 1:{message = "Congratulations on your first image!"; showNotification(Title,message); break;}
-            case 10:{message = "This is the 10th image you added ! cool!";showNotification(Title,message); break;}
-            case 25:{message = "Well played on your 25th image - keep it coming";showNotification(Title,message); break;}
-            case 50:{message = "Indeed nice collection of 50 photos. very nice!";showNotification(Title,message); break;}
-            case 100:{message = "AMAZING! you added 100 photos 'till now";showNotification(Title,message); break;}
-            case 500:{message = "WOW 500 photos WOW";showNotification(Title,message); break;}
-            case 1000:{message = "OMG ,YOU ON '1000 PHOTOS ADEED' !!!!!!";showNotification(Title,message); break;}
+            case 1:{message = getString(R.string.ach1); showNotification(Title,message); break;}
+            case 10:{message = getString(R.string.ach2);showNotification(Title,message); break;}
+            case 25:{message = getString(R.string.ach3);showNotification(Title,message); break;}
+            case 50:{message = getString(R.string.ach4);showNotification(Title,message); break;}
+            case 100:{message = getString(R.string.ach5);showNotification(Title,message); break;}
+            case 500:{message = getString(R.string.ach6);showNotification(Title,message); break;}
+            case 1000:{message = getString(R.string.ach7);showNotification(Title,message); break;}
         }
 
 
@@ -288,7 +288,7 @@ public class TakePhoto extends AppCompatActivity {
             if(!outputDir.exists()) {
                 boolean wasSuccessful =outputDir.mkdirs();
                 if (!wasSuccessful) {
-                    System.out.println("was not successful.");
+                    System.out.println(getString(R.string.fail2));
                 }
             }
 

@@ -43,7 +43,7 @@ public class Setting extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(Setting.this);
-                builder.setTitle("Are you sure you want to DELETE ALL ALBUMS in the app?");
+                builder.setTitle(R.string.deletos_allos);
 
                 final EditText input = new EditText(Setting.this);
 

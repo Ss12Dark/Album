@@ -16,7 +16,7 @@
         android:textSize="25dp"
         android:layout_marginBottom="25dp"
         android:textColor="#1C00DB"
-        android:text="To reset all Albums"
+        android:text="@string/to_reset_all_albums"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <Button
@@ -24,14 +24,14 @@
         android:background="@drawable/albumstyle"
         android:id="@+id/reset"
         android:textColor="#1C00DB"
-        android:text="reset all"
+        android:text="@string/reset_all"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
         android:layout_marginBottom="25dp"
         android:textSize="25dp"
         android:textColor="#1C00DB"
-        android:text="Choose the App background"
+        android:text="@string/choose_the_app_background"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <LinearLayout
@@ -46,7 +46,7 @@
             android:background="@color/blu"
             android:onClick="changeBackground"
             android:tag="1"
-            android:text="theme 1"
+            android:text="@string/theme_1"
             android:textColor="#1C00DB" />
 
         <Button
@@ -56,7 +56,7 @@
             android:background="@color/pinki"
             android:onClick="changeBackground"
             android:tag="2"
-            android:text="theme 2"
+            android:text="@string/theme_2"
             android:textColor="#1C00DB" />
 
         <Button
@@ -66,7 +66,7 @@
             android:background="@color/pur"
             android:onClick="changeBackground"
             android:tag="3"
-            android:text="theme 3"
+            android:text="@string/theme_3"
             android:textColor="#1C00DB" />
     </LinearLayout>
     <Button
@@ -74,7 +74,7 @@
         android:background="@drawable/albumstyle"
         android:id="@+id/back"
         android:textColor="#1C00DB"
-        android:text="back"
+        android:text="@string/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </LinearLayout>

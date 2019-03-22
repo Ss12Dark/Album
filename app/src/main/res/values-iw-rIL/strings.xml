@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Album</string>
+
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="to_add_your_first_album_click_here">לפתיחת האלבום הראשון שלך לחץ/י כאן :)</string>
+    <string name="to_reset_all_albums">!למחיקת כל האלבומים!</string>
+    <string name="reset_all">מחק הכל</string>
+    <string name="choose_the_app_background">בחר רקע לאפליקציה</string>
+    <string name="theme_1">רקע 1</string>
+    <string name="theme_2">רקע 2</string>
+    <string name="theme_3">רקע 3</string>
+    <string name="back">חזור</string>
+    <string name="add_a_title_no_longer_than_50_letters_album_name_default">הוסף כותרת (לא יותר מ-50 אותיות), ללא שם=שם האלבום</string>
+    <string name="save">שמור</string>
+    <string name="load">הוסף מהגלריה</string>
+    <string name="back2">◄ חזור</string>
+    <string name="add_photo">הוסף תמונה</string>
+    <string name="photo_name_description">כותרת התמונה (השם שלה)</string>
+    <string name="search_for_photos">חיפוש תמונות</string>
+    <string name="add_album">הוסף אלבום</string>
+    <string name="settings">הגדרות</string>
+    <string name="please_enter_name">בבקשה הכנס שם אלבום:</string>
+    <string name="delete_album">מחק אלבום</string>
+    <string name="are_sure">האם אתה בטוח שאתה רוצה למחוק את האלבום הזה?</string>
+    <string name="deletos_allos">האם אתה בטוח שאתה רוצה למחוק את !כל! האלבומים?</string>
+    <string name="empty">האלבום הזה הוא ריק</string>
+    <string name="deleto_photo">האם אתה בטוח שאתה רוצה למחוק את התמונה?</string>
+    <string name="loading">טוען…</string>
+    <string name="fail">נכשל לשמור את התמונה:</string>
+    <string name="fail2">לא היה מוצלח.</string>
+    <string name="complete">הישג הושלם!</string>
+    <string name="ach1">מזל טוב על התמונה הראשונה שלך!</string>
+    <string name="ach2">זו התמונה העשירית שהוספת! מגניב!</string>
+    <string name="ach3">את/ה על הגל עם 25 תמונות - עוד להוסיף! :)</string>
+    <string name="ach4">אוסף ממש מרשים של 50 תמונות! יפה מאוד.</string>
+    <string name="ach5">מדהים! 100 תמונות עד עכשיו!</string>
+    <string name="ach6">ואוו 500 תמונות ואוו</string>
+    <string name="ach7">אומייגאד 1000 תמונות!!!!!!</string>
+</resources>

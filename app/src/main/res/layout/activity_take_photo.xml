@@ -23,7 +23,7 @@
             android:layout_height="100dp">
             <EditText
                 android:background="@color/white"
-                android:hint="Add a Title (No longer than 50 letters),album name=default"
+                android:hint="@string/add_a_title_no_longer_than_50_letters_album_name_default"
                 android:id="@+id/title"
                 android:layout_marginTop="10dp"
                 android:layout_width="250dp"
@@ -36,7 +36,7 @@
             <Button
                 android:background="@drawable/albumstyle"
                 android:onClick="save"
-                android:text="save"
+                android:text="@string/save"
                 android:textColor="#1C00DB"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -47,7 +47,7 @@
                 android:background="@drawable/albumstyle"
                 android:onClick="load"
                 android:layout_marginLeft="45dp"
-                android:text="load"
+                android:text="@string/load"
                 android:textColor="#1C00DB" />
         </LinearLayout>
 

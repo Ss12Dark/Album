@@ -18,7 +18,7 @@
             android:layout_height="wrap_content">
             <EditText
                 android:id="@+id/name"
-                android:hint="photo name(description)"
+                android:hint="@string/photo_name_description"
                 android:background="@color/white"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content" />

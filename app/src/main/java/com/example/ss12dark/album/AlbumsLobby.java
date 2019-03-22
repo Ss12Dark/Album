@@ -35,6 +35,7 @@ public class AlbumsLobby extends AppCompatActivity {
     MyDBHandler db;
     String m_Text = "";
     LinearLayout pageColor;
+    Button firstAlbum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,14 @@ public class AlbumsLobby extends AppCompatActivity {
         backgroundColor();
         db = new MyDBHandler(this);
         ll = (LinearLayout) findViewById(R.id.List);
+        firstAlbum = (Button) findViewById(R.id.first);
+
+        firstAlbum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add();
+            }
+        });
 
         final Button menu = (Button) findViewById(R.id.menu);
         menu.setOnClickListener(new View.OnClickListener() {
@@ -61,33 +70,7 @@ public class AlbumsLobby extends AppCompatActivity {
                         switch (item.getItemId())   {
 
                             case R.id.add:
-                                final Button album = new Button(AlbumsLobby.this);//new album object
-
-                                AlertDialog.Builder builder = new AlertDialog.Builder(AlbumsLobby.this);
-                                builder.setTitle("Please enter Album Name:");
-
-                                final EditText input = new EditText(AlbumsLobby.this);
-                                input.setInputType(InputType.TYPE_CLASS_TEXT);
-                                builder.setView(input);
-
-                                builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        m_Text = input.getText().toString();
-                                        String albumname = m_Text;
-                                        makeButton(album,numberCounter,albumname);
-                                        album.setBackground(getDrawable(R.drawable.albumstyle));
-                                        ll.addView(album);
-                                    }
-                                });
-                                builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.cancel();
-                                    }
-                                });
-
-                                builder.show();
+                                add();
                                 break;
 
                             case R.id.search:
@@ -116,6 +99,36 @@ public class AlbumsLobby extends AppCompatActivity {
 
     }
 
+    public void add(){
+        final Button album = new Button(AlbumsLobby.this);//new album object
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(AlbumsLobby.this);
+        builder.setTitle(R.string.please_enter_name);
+
+        final EditText input = new EditText(AlbumsLobby.this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                m_Text = input.getText().toString();
+                String albumname = m_Text;
+                makeButton(album,numberCounter,albumname);
+                album.setBackground(getDrawable(R.drawable.albumstyle));
+                ll.addView(album);
+                firstAlbum.setVisibility(View.GONE);
+            }
+        });
+        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
 
     public void backgroundColor(){
         pageColor = (LinearLayout) findViewById(R.id.pagecolor);
@@ -137,6 +150,7 @@ public class AlbumsLobby extends AppCompatActivity {
         if (all.size()==i){
 //if the list is empty do nothing
         }else{
+            firstAlbum.setVisibility(View.GONE);
             while(i<all.size()){
                 boolean notGood = true;
                 boolean next = true;
@@ -214,8 +228,8 @@ public class AlbumsLobby extends AppCompatActivity {
                 } else {
                     builder = new AlertDialog.Builder(AlbumsLobby.this);
                 }
-                builder.setTitle("Delete Album")
-                        .setMessage("Are you sure you want to delete this album?")
+                builder.setTitle(R.string.delete_album)
+                        .setMessage(R.string.are_sure)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 deleteAlbum(albumN);

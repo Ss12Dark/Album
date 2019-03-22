@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/add"
-        android:title="Add Album"/>
+        android:title="@string/add_album"/>
 
     <item
         android:id="@+id/search"
-        android:title="Search for photos"/>
+        android:title="@string/search_for_photos"/>
 
     <item
         android:id="@+id/setting"
-        android:title="Settings"/>
+        android:title="@string/settings"/>
 
 </menu>

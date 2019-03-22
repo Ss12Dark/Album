@@ -33,7 +33,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 TextView albumNameView;
-Button newMe;
+Button newMe,back;
 MyDBHandler db;
 List <Photo> all;
 LinearLayout upperPage,bottomPage;
@@ -46,6 +46,7 @@ String number;
         setContentView(R.layout.activity_main);
         backgroundColor();
 
+        back = (Button) findViewById(R.id.back);
         upperPage = (LinearLayout) findViewById(R.id.upperPage);
         bottomPage = (LinearLayout) findViewById(R.id.bottomPage);
         albumNameView = (TextView) findViewById(R.id.numberofplace);
@@ -66,7 +67,12 @@ String number;
             }
         });
 
-
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         db = new MyDBHandler(this);
         number = num+"";
@@ -74,7 +80,7 @@ String number;
         if(all.size()>0){
             new AsyncCaller().execute(number);
         }else{
-            Toast.makeText(MainActivity.this,"this album is empty",Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.empty,Toast.LENGTH_SHORT).show();
         }
         db.close();
     }
@@ -101,6 +107,7 @@ String number;
         }
     }
 
+
     private class AsyncCaller extends AsyncTask<String, Void, Void>
     {
         ProgressDialog pdLoading = new ProgressDialog(MainActivity.this); //the loading massage in the screen
@@ -111,7 +118,7 @@ String number;
             MainActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    pdLoading.setMessage("\tLoading...");
+                    pdLoading.setMessage(getString(R.string.loading));
                     pdLoading.show();
                 }
             });
@@ -204,7 +211,7 @@ String number;
                         vi.vibrate(500);
                     }
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                    builder.setTitle("Are you sure you want to delete this photo?");
+                    builder.setTitle(R.string.deleto_photo);
 
                     builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
