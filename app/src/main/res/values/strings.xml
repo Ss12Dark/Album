@@ -36,5 +36,6 @@
     <string name="ach5">AMAZING! you added 100 photos \'till now</string>
     <string name="ach6">WOW 500 photos WOW</string>
     <string name="ach7">OMG ,YOU ON \'1000 PHOTOS ADEED\' !!!!!!</string>
+    <string name="toLong">Text is too long</string>
 
 </resources>

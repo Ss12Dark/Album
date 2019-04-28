@@ -39,12 +39,13 @@ import android.widget.Toast;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
-public class TakePhoto extends AppCompatActivity {
+public class TakePhoto extends AppCompatActivity  {
     ImageView imageV;
     EditText title;
     int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1763;
@@ -141,7 +142,7 @@ public class TakePhoto extends AppCompatActivity {
 
             }else{
                 if(title.getText().toString().length()>50){
-                    Toast.makeText(TakePhoto.this, "Text is too long" , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TakePhoto.this, R.string.toLong , Toast.LENGTH_SHORT).show();
                 }else {
                     setAndSavePhoto();
                 }
@@ -200,6 +201,7 @@ public class TakePhoto extends AppCompatActivity {
             try {
                 imageBitmap = MediaStore.Images.Media.getBitmap(
                         getContentResolver(), Selected_Image_Uri);
+                imageBitmap = OrientationHandler.modifyOrientation(imageBitmap,getRealPathFromURI(Selected_Image_Uri));
                 imageV.setBackgroundColor(Color.alpha(Color.WHITE));
                 imageV.setImageBitmap(imageBitmap);
 
@@ -211,14 +213,25 @@ public class TakePhoto extends AppCompatActivity {
         }
 
         if (requestCode == SELECT_PHOTO && resultCode == RESULT_OK) {
-            Selected_Image_Uri = data.getData();
-            imageV.setBackgroundColor(Color.alpha(Color.WHITE));
-            imageV.setImageURI(Selected_Image_Uri);
+//            Selected_Image_Uri = data.getData();
+//            imageV.setBackgroundColor(Color.alpha(Color.WHITE));
+//            imageV.setImageURI(Selected_Image_Uri);
+            try {
+                Selected_Image_Uri = data.getData();
+                imageBitmap = MediaStore.Images.Media.getBitmap(
+                        getContentResolver(), Selected_Image_Uri);
+                imageBitmap = OrientationHandler.modifyOrientation(imageBitmap,getRealPathFromURI(Selected_Image_Uri));
+                imageV.setBackgroundColor(Color.alpha(Color.WHITE));
+                imageV.setImageBitmap(imageBitmap);
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
     }
-
-
+    
 
     public String getRealPathFromURI(Uri uri) {
         String path = "";
@@ -277,28 +290,4 @@ public class TakePhoto extends AppCompatActivity {
     }
 
 
-    private String SaveImage(Bitmap finalBitmap) {
-        File newFile= new File("" + File.separator + "test.png");
-        Random generator = new Random();
-        int n = 10000;
-        n = generator.nextInt(n);
-        try {
-            String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + File.separator + "album_photos";
-            File outputDir= new File(path);
-            if(!outputDir.exists()) {
-                boolean wasSuccessful =outputDir.mkdirs();
-                if (!wasSuccessful) {
-                    System.out.println(getString(R.string.fail2));
-                }
-            }
-
-            newFile = new File(path + File.separator +fileName +"-"+n+".png");
-            FileOutputStream out = new FileOutputStream(newFile);
-            finalBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return newFile.toString();
-    }
 }

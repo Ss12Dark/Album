@@ -22,6 +22,11 @@ ImageView iv;
         if(imgFile.exists()){
 
             Bitmap myBitmap = BitmapFactory.decodeFile(filePath);
+            try {
+                myBitmap = OrientationHandler.modifyOrientation(myBitmap, filePath);
+            }catch (Exception e){
+                //nahhh
+            }
             iv.setImageBitmap(myBitmap);
 
         }

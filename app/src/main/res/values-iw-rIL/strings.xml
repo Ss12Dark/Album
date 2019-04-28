@@ -37,4 +37,6 @@
     <string name="ach5">מדהים! 100 תמונות עד עכשיו!</string>
     <string name="ach6">ואוו 500 תמונות ואוו</string>
     <string name="ach7">אומייגאד 1000 תמונות!!!!!!</string>
+    <string name="toLong">הטקסט ארוך מידי</string>
+
 </resources>

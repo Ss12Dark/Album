@@ -19,6 +19,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Layout;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -160,6 +161,11 @@ String number;
             if(imgFile.exists()){
 
                 Bitmap myBitmap =decodeSampledBitmapFromURL(filePath);//half quality method
+                try {
+                    myBitmap = OrientationHandler.modifyOrientation(myBitmap, filePath);
+                }catch (Exception e){
+                    //do nothing
+                }
                 image.setImageBitmap(myBitmap);//set the imgae on the view
 
             }
