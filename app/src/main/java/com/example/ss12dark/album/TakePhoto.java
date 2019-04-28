@@ -231,7 +231,7 @@ public class TakePhoto extends AppCompatActivity  {
         }
 
     }
-    
+
 
     public String getRealPathFromURI(Uri uri) {
         String path = "";

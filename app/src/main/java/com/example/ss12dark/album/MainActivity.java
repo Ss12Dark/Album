@@ -162,7 +162,7 @@ String number;
 
                 Bitmap myBitmap =decodeSampledBitmapFromURL(filePath);//half quality method
                 try {
-                    myBitmap = OrientationHandler.modifyOrientation(myBitmap, filePath);
+                    myBitmap = OrientationHandler.modifyOrientation(myBitmap, filePath);//rotate the image to original orientation
                 }catch (Exception e){
                     //do nothing
                 }
